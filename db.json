@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Maria Silva",
+      "cpf": "12345678900",
+      "password": "senha",
+      "balance": 5000,
+      "transactions": []
+    }
+  ],
+  "transactions": []
+}
