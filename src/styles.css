@@ -70,8 +70,6 @@ body {
   text-align: center;
 }
 
-/* src/styles.css (add to the existing file) */
-
 body {
   background-color: #e9ecef;
 }
@@ -154,4 +152,25 @@ body {
 
 .action-btn:hover {
   background-color: #0056b3;
+}
+
+.success-message {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.transaction-form {
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.transaction-form .form-group {
+  margin-bottom: 1.5rem;
 }
