@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import { type RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { addTransaction, setBalance } from "../redux/userSlice";
 

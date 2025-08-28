@@ -1,24 +1,27 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import { type RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { clearUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  if (!user.id) {
-    navigate("/login");
+  useEffect(() => {
+    if (!user || !user.id) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+  if (!user || !user.id) {
     return null;
   }
 
   const handleLogout = () => {
     dispatch(clearUser());
     localStorage.removeItem("user_id");
-    navigate("/login");
   };
   return (
     <div className="container">

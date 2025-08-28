@@ -1,11 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export interface Transaction {
+  id: string;
+  type: string;
+  date: string;
+  value: number;
+  balanceAfter: number;
+}
 interface UserState {
   id: string | null;
   name: string | null;
   balance: number;
-  transactions: any[]; //change type later
+  transactions: Transaction[];
 }
 
 const initialState: UserState = {
@@ -28,7 +35,7 @@ export const userSlice = createSlice({
     setBalance: (state, action: PayloadAction<number>) => {
       state.balance = action.payload;
     },
-    addTransaction: (state, action: PayloadAction<any>) => {
+    addTransaction: (state, action: PayloadAction<Transaction>) => {
       state.transactions.unshift(action.payload); //adds new transaction to the beginning
     },
     clearUser: (state) => {
