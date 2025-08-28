@@ -3,21 +3,24 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../api/apiService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // clear previous errors
 
     try {
-      const { user, token } = await login(cpf, password);
+      const { user } = await login(cpf, password);
       localStorage.setItem("user_id", user.id);
-      console.log("Login successful!", token);
+      dispatch(setUser(user));
       navigate("/");
     } catch (err) {
       setError("Invalid CPF or Password.");
