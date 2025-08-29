@@ -11,6 +11,7 @@ describe("Login Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
+
   it("should render the login form", () => {
     renderWithProviders(<Login />);
 
@@ -20,6 +21,7 @@ describe("Login Component", () => {
     expect(screen.getByRole("button", { name: /Login/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /Login/i })).toBeInTheDocument();
   });
+
   it("handles successful login", async () => {
     const user = userEvent.setup();
 
