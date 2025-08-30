@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./redux/userSlice";
+import userSlice, { type Transaction } from "./redux/userSlice";
 
 // Support both store and preloadedState approaches
 interface TestRenderOptions {
@@ -41,6 +41,20 @@ export const renderWithProviders = (
       <BrowserRouter>{component}</BrowserRouter>
     </Provider>
   );
+};
+
+// New function to create a store with transactions
+export const createStoreWithTransactions = (transactions: Transaction[]) => {
+  const preloadedState = {
+    user: {
+      id: "test-user-id",
+      name: "Test User",
+      balance: 0, // This value doesn't matter for this test
+      transactions: transactions,
+    },
+  };
+
+  return createTestStore(preloadedState);
 };
 
 // Re-export everything from testing-library/react

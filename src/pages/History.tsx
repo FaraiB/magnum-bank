@@ -12,6 +12,7 @@ const History = () => {
 
   const [filterType, setFilterType] = useState("all");
   const [filterPeriod, setFilterPeriod] = useState("all");
+
   const [filteredTransactions, setFilteredTransactions] =
     useState<Transaction[]>(allTransactions);
 
@@ -26,7 +27,8 @@ const History = () => {
     // Filter by date period
     if (filterPeriod !== "all") {
       const today = new Date();
-      let filterDate = new Date();
+      // Create a new Date object to avoid modifying 'today'
+      let filterDate = new Date(today);
 
       switch (filterPeriod) {
         case "7days":
@@ -37,6 +39,9 @@ const History = () => {
           break;
         case "30days":
           filterDate.setDate(today.getDate() - 30);
+          break;
+        case "90days":
+          filterDate.setDate(today.getDate() - 90);
           break;
       }
 
@@ -60,17 +65,20 @@ const History = () => {
         <h2>All Transactions</h2>
 
         <div className="filters">
-          <label>Filter by Type:</label>
+          <label htmlFor="filter-type">Filter by Type:</label>
           <select
+            id="filter-type"
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
             <option value="all">All</option>
-            <option value="PIX/TED">PIX/TED</option>
+            <option value="PIX">PIX</option>
+            <option value="TED">TED</option>
           </select>
 
-          <label>Filter by Period:</label>
+          <label htmlFor="filter-period">Filter by Period:</label>
           <select
+            id="filter-period"
             value={filterPeriod}
             onChange={(e) => setFilterPeriod(e.target.value)}
           >
@@ -78,6 +86,7 @@ const History = () => {
             <option value="7days">Last 7 Days</option>
             <option value="15days">Last 15 Days</option>
             <option value="30days">Last 30 Days</option>
+            <option value="90days">Last 90 Days</option>
           </select>
         </div>
 
