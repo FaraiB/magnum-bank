@@ -9,8 +9,9 @@ interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const userId = useSelector((state: RootState) => state.user.id);
+  const authToken = localStorage.getItem("auth_token");
 
-  if (!userId) {
+  if (!userId || !authToken) {
     return <Navigate to="/login" replace />; //redirect to login if no user is authenticated
   }
   //render protected page

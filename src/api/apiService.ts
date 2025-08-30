@@ -9,12 +9,12 @@ const API = axios.create({
 export const login = async (cpf: string, password: string) => {
   try {
     const response = await API.get(`/users?cpf=${cpf}&password=${password}`);
-    // Check if the user was found and return a token (in a real app, you'd get this from the server)
     if (response.data.length > 0) {
-      return {
-        user: response.data[0],
-        token: "mock-jwt-token",
-      };
+      const user = response.data[0];
+      const token = `mock-jwt-token-for-${user.id}`; // Simulate a unique token
+      // Store token for subsequent requests
+      API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      return { user, token };
     }
     throw new Error("Invalid credentials");
   } catch (error) {
@@ -33,4 +33,13 @@ export const getUserData = async (userId: string) => {
 export const createTransaction = async (transactionData: any) => {
   const response = await API.post("/transactions", transactionData);
   return response.data;
+};
+
+// Function to set the auth token for initial app load
+export const setAuthToken = (token: string | null) => {
+  if (token) {
+    API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete API.defaults.headers.common["Authorization"];
+  }
 };

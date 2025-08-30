@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../api/apiService";
+import { login, setAuthToken } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
 
@@ -16,8 +16,10 @@ const Login = () => {
     setError(""); // clear previous errors
 
     try {
-      const { user } = await login(cpf, password);
+      const { user, token } = await login(cpf, password);
       localStorage.setItem("user_id", user.id);
+      localStorage.setItem("auth_token", token); // Store the token
+      setAuthToken(token); // Set the auth header for all subsequent requests
       dispatch(setUser(user));
       navigate("/");
     } catch (err) {
