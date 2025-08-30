@@ -1,4 +1,3 @@
-// Transactions.tsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
@@ -12,17 +11,38 @@ const Transactions = () => {
 
   const [recipientName, setRecipientName] = useState("");
   const [recipientCpf, setRecipientCpf] = useState("");
-  const [amount, setAmount] = useState<number | "">("");
+  const [amountInput, setAmountInput] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [transactionType, setTransactionType] = useState("PIX");
+
+  const formatCurrency = (value: string) => {
+    const digits = value.replace(/\D/g, "");
+    if (!digits) {
+      return "";
+    }
+    const numberValue = parseInt(digits, 10);
+    const formatted = (numberValue / 100).toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return formatted;
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const rawDigits = value.replace(/\D/g, "");
+    setAmountInput(rawDigits);
+  };
 
   const handleTransaction = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (typeof amount !== "number" || amount <= 0) {
+    const amount = parseFloat(amountInput) / 100;
+
+    if (isNaN(amount) || amount <= 0) {
       setError("Please enter a valid amount.");
       return;
     }
@@ -32,29 +52,35 @@ const Transactions = () => {
       return;
     }
 
+    const transactionValue = -Math.abs(amount);
+    const newBalance = user.balance + transactionValue;
+
+    const transaction = {
+      id: Date.now().toString(),
+      type: transactionType,
+      date: new Date().toISOString(),
+      value: transactionValue,
+      balanceAfter: newBalance,
+    };
+
     try {
-      const newBalance = user.balance - amount;
-      const transaction = {
-        id: Date.now().toString(),
-        type: transactionType,
-        date: new Date().toISOString(),
-        value: amount,
-        balanceAfter: newBalance,
-      };
-      dispatch(setBalance(newBalance));
       dispatch(addTransaction(transaction));
+      dispatch(setBalance(newBalance));
 
       setSuccess(
-        `Transaction of R$ ${amount.toFixed(2)} to ${recipientName} successful!`
+        `Transaction of R$ ${Math.abs(transactionValue).toFixed(
+          2
+        )} to ${recipientName} successful!`
       );
 
       setRecipientName("");
       setRecipientCpf("");
-      setAmount("");
+      setAmountInput("");
     } catch (err) {
       setError("Transaction failed. Please try again");
     }
   };
+
   return (
     <div className="container">
       <nav className="navbar">
@@ -71,7 +97,7 @@ const Transactions = () => {
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
 
-        <form onSubmit={handleTransaction} action="transaction-form">
+        <form onSubmit={handleTransaction}>
           <div className="form-group">
             <label htmlFor="recipientName">Recipient Name:</label>
             <input
@@ -93,12 +119,13 @@ const Transactions = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="amount">Amount:</label>
+            <label htmlFor="amount">Amount (R$):</label>
             <input
               type="text"
               id="amount"
-              value={amount}
-              onChange={(e) => setAmount(parseFloat(e.target.value) || "")}
+              value={formatCurrency(amountInput)}
+              onChange={handleAmountChange}
+              placeholder="0,00"
               required
             />
           </div>
