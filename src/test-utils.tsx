@@ -5,26 +5,39 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./redux/userSlice";
 
-const createTestStore = () => {
+// Support both store and preloadedState approaches
+interface TestRenderOptions {
+  store?: any; // For existing tests that create their own stores
+  preloadedState?: {
+    user?: {
+      id: string | null;
+      name: string | null;
+      balance: number;
+      transactions: any[];
+    };
+  };
+}
+
+const createTestStore = (preloadedState?: any) => {
   return configureStore({
     reducer: {
       user: userSlice,
     },
-  });
+    preloadedState,
+  } as any);
 };
-
-interface RenderOptions {
-  store?: ReturnType<typeof createTestStore>;
-}
 
 export const renderWithProviders = (
   component: React.ReactElement,
-  options: RenderOptions = {}
+  options: TestRenderOptions = {}
 ) => {
-  const { store = createTestStore() } = options;
+  const { store, preloadedState } = options;
+
+  // Use provided store OR create one with preloadedState OR create default empty store
+  const testStore = store || createTestStore(preloadedState);
 
   return render(
-    <Provider store={store}>
+    <Provider store={testStore}>
       <BrowserRouter>{component}</BrowserRouter>
     </Provider>
   );

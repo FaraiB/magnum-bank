@@ -101,7 +101,7 @@ const Transactions = () => {
             />
           </div>
           <button type="submit" className="action-btn">
-            Tansfer
+            Transfer
           </button>
         </form>
       </div>
