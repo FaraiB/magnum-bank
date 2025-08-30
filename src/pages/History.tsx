@@ -1,57 +1,76 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { type Transaction } from "../redux/userSlice";
 
 const History = () => {
+  const navigate = useNavigate();
   const allTransactions = useSelector(
     (state: RootState) => state.user.transactions
   );
-  const navigate = useNavigate();
 
+  // State for filtering and sorting
   const [filterType, setFilterType] = useState("all");
-  const [filterPeriod, setFilterPeriod] = useState("all");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
+  const [sortOrder, setSortOrder] = useState("desc");
 
-  const [filteredTransactions, setFilteredTransactions] =
-    useState<Transaction[]>(allTransactions);
-
-  useEffect(() => {
-    let tempTransactions = [...allTransactions];
-
-    // Filter by transaction type
-    if (filterType !== "all") {
-      tempTransactions = tempTransactions.filter((t) => t.type === filterType);
-    }
-
-    // Filter by date period
-    if (filterPeriod !== "all") {
-      const today = new Date();
-      // Create a new Date object to avoid modifying 'today'
-      let filterDate = new Date(today);
-
-      switch (filterPeriod) {
-        case "7days":
-          filterDate.setDate(today.getDate() - 7);
-          break;
-        case "15days":
-          filterDate.setDate(today.getDate() - 15);
-          break;
-        case "30days":
-          filterDate.setDate(today.getDate() - 30);
-          break;
-        case "90days":
-          filterDate.setDate(today.getDate() - 90);
-          break;
+  // Filtering Logic
+  const filteredTransactions = allTransactions.filter(
+    (transaction: Transaction) => {
+      // Filter by transaction type
+      if (filterType !== "all" && transaction.type !== filterType) {
+        return false;
       }
 
-      tempTransactions = tempTransactions.filter(
-        (t) => new Date(t.date) >= filterDate
-      );
-    }
+      // Filter by date range
+      if (startDate && new Date(transaction.date) < new Date(startDate)) {
+        return false;
+      }
+      if (endDate && new Date(transaction.date) > new Date(endDate)) {
+        return false;
+      }
 
-    setFilteredTransactions(tempTransactions);
-  }, [allTransactions, filterType, filterPeriod]);
+      // Filter by amount range
+      const amount = Math.abs(transaction.value);
+      if (minAmount && amount < parseFloat(minAmount)) {
+        return false;
+      }
+      if (maxAmount && amount > parseFloat(maxAmount)) {
+        return false;
+      }
+
+      return true;
+    }
+  );
+
+  // Sorting Logic
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+  });
+
+  // Helper function to handle period filters
+  const handlePeriodFilter = (days: number) => {
+    const today = new Date();
+    const pastDate = new Date();
+    pastDate.setDate(today.getDate() - days);
+    setStartDate(pastDate.toISOString().substring(0, 10));
+    setEndDate(today.toISOString().substring(0, 10));
+  };
+
+  // New handler to reset all filters
+  const handleResetFilters = () => {
+    setFilterType("all");
+    setStartDate("");
+    setEndDate("");
+    setMinAmount("");
+    setMaxAmount("");
+  };
 
   return (
     <div className="container">
@@ -62,64 +81,112 @@ const History = () => {
         </button>
       </nav>
       <div className="content">
-        <h2>All Transactions</h2>
+        <h2>Your Transactions</h2>
 
-        <div className="filters">
-          <label htmlFor="filter-type">Filter by Type:</label>
-          <select
-            id="filter-type"
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <option value="all">All</option>
-            <option value="PIX">PIX</option>
-            <option value="TED">TED</option>
-          </select>
+        <div className="filter-controls">
+          <div className="filter-group">
+            <label htmlFor="filterType">Filter by Type:</label>
+            <select
+              id="filterType"
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="PIX">PIX</option>
+              <option value="TED">TED</option>
+            </select>
+          </div>
 
-          <label htmlFor="filter-period">Filter by Period:</label>
+          <div className="filter-group">
+            <label>Filter by Period:</label>
+            <button onClick={() => handlePeriodFilter(7)}>Last 7 days</button>
+            <button onClick={() => handlePeriodFilter(15)}>Last 15 days</button>
+            <button onClick={() => handlePeriodFilter(30)}>Last 30 days</button>
+            <button onClick={() => handlePeriodFilter(90)}>Last 90 days</button>
+          </div>
+
+          <div className="filter-group">
+            <label htmlFor="startDate">Start Date:</label>
+            <input
+              type="date"
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <label htmlFor="endDate">End Date:</label>
+            <input
+              type="date"
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
+
+          <div className="filter-group">
+            <label htmlFor="minAmount">Min Amount (R$):</label>
+            <input
+              type="number"
+              id="minAmount"
+              value={minAmount}
+              onChange={(e) => setMinAmount(e.target.value)}
+              placeholder="0.00"
+            />
+            <label htmlFor="maxAmount">Max Amount (R$):</label>
+            <input
+              type="number"
+              id="maxAmount"
+              value={maxAmount}
+              onChange={(e) => setMaxAmount(e.target.value)}
+              placeholder="0.00"
+            />
+          </div>
+
+          <button onClick={handleResetFilters} className="action-btn">
+            Reset Filters
+          </button>
+        </div>
+
+        <div className="sort-controls">
+          <label htmlFor="sortOrder">Sort by Date:</label>
           <select
-            id="filter-period"
-            value={filterPeriod}
-            onChange={(e) => setFilterPeriod(e.target.value)}
+            id="sortOrder"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
           >
-            <option value="all">All</option>
-            <option value="7days">Last 7 Days</option>
-            <option value="15days">Last 15 Days</option>
-            <option value="30days">Last 30 Days</option>
-            <option value="90days">Last 90 Days</option>
+            <option value="desc">Newest First</option>
+            <option value="asc">Oldest First</option>
           </select>
         </div>
 
-        <table className="transaction-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Type</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTransactions.length === 0 ? (
-              <tr>
-                <td colSpan={3} style={{ textAlign: "center" }}>
-                  No transactions found.
-                </td>
-              </tr>
-            ) : (
-              filteredTransactions.map((transaction) => (
-                <tr key={transaction.id}>
-                  <td>{new Date(transaction.date).toLocaleDateString()}</td>
-                  <td>{transaction.type}</td>
-                  <td
-                    className={transaction.value < 0 ? "negative" : "positive"}
-                  >
-                    R$ {transaction.value.toFixed(2)}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        <div className="transaction-list">
+          {sortedTransactions.length > 0 ? (
+            <ul>
+              {sortedTransactions.map((transaction) => (
+                <li key={transaction.id} className="transaction-item">
+                  <div className="transaction-details">
+                    <p>
+                      <strong>Type:</strong> {transaction.type}
+                    </p>
+                    <p>
+                      <strong>Date:</strong>{" "}
+                      {new Date(transaction.date).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Amount:</strong> R${" "}
+                      {Math.abs(transaction.value).toFixed(2)}
+                    </p>
+                    <p>
+                      <strong>Balance after:</strong> R${" "}
+                      {transaction.balanceAfter.toFixed(2)}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No transactions found.</p>
+          )}
+        </div>
       </div>
     </div>
   );
