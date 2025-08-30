@@ -9,16 +9,22 @@ const createTestStore = () => {
   return configureStore({
     reducer: {
       user: userSlice,
-      // Add other slices as needed
     },
   });
 };
 
-export const renderWithProviders = (component: React.ReactElement) => {
-  const testStore = createTestStore();
+interface RenderOptions {
+  store?: ReturnType<typeof createTestStore>;
+}
+
+export const renderWithProviders = (
+  component: React.ReactElement,
+  options: RenderOptions = {}
+) => {
+  const { store = createTestStore() } = options;
 
   return render(
-    <Provider store={testStore}>
+    <Provider store={store}>
       <BrowserRouter>{component}</BrowserRouter>
     </Provider>
   );
