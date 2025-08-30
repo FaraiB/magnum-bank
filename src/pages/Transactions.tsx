@@ -15,6 +15,8 @@ const Transactions = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [transactionType, setTransactionType] = useState("PIX");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [transactionPassword, setTransactionPassword] = useState("");
 
   const formatCurrency = (value: string) => {
     const digits = value.replace(/\D/g, "");
@@ -52,32 +54,46 @@ const Transactions = () => {
       return;
     }
 
-    const transactionValue = -Math.abs(amount);
-    const newBalance = user.balance + transactionValue;
+    // Open the password modal before proceeding with the transaction
+    setIsModalOpen(true);
+  };
 
-    const transaction = {
-      id: Date.now().toString(),
-      type: transactionType,
-      date: new Date().toISOString(),
-      value: transactionValue,
-      balanceAfter: newBalance,
-    };
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (transactionPassword === "1234") {
+      // Mock successful password check
+      const amount = parseFloat(amountInput) / 100;
+      const transactionValue = -Math.abs(amount);
+      const newBalance = user.balance + transactionValue;
 
-    try {
-      dispatch(addTransaction(transaction));
-      dispatch(setBalance(newBalance));
+      const transaction = {
+        id: Date.now().toString(),
+        type: transactionType,
+        date: new Date().toISOString(),
+        value: transactionValue,
+        balanceAfter: newBalance,
+      };
 
-      setSuccess(
-        `Transaction of R$ ${Math.abs(transactionValue).toFixed(
-          2
-        )} to ${recipientName} successful!`
-      );
-
-      setRecipientName("");
-      setRecipientCpf("");
-      setAmountInput("");
-    } catch (err) {
-      setError("Transaction failed. Please try again");
+      try {
+        dispatch(addTransaction(transaction));
+        dispatch(setBalance(newBalance));
+        setSuccess(
+          `Transaction of R$ ${Math.abs(transactionValue).toFixed(
+            2
+          )} to ${recipientName} successful!`
+        );
+        setRecipientName("");
+        setRecipientCpf("");
+        setAmountInput("");
+        setTransactionPassword("");
+        setIsModalOpen(false);
+      } catch (err) {
+        setError("Transaction failed. Please try again");
+        setIsModalOpen(false);
+      }
+    } else {
+      setError("Invalid transaction password.");
+      setTransactionPassword("");
     }
   };
 
@@ -145,6 +161,32 @@ const Transactions = () => {
           </button>
         </form>
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Enter Transaction Password</h3>
+            <form onSubmit={handlePasswordSubmit}>
+              <input
+                type="password"
+                value={transactionPassword}
+                onChange={(e) => setTransactionPassword(e.target.value)}
+                required
+              />
+              <button type="submit" className="action-btn">
+                Confirm
+              </button>
+              <button
+                type="button"
+                className="action-btn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
