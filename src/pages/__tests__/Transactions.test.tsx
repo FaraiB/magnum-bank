@@ -41,6 +41,7 @@ describe("Transactions Component", () => {
     expect(screen.getByLabelText(/Recipient Name:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Recipient CPF\/CNPJ:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Amount:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Transaction Type:/i)).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /Transfer/i })
     ).toBeInTheDocument();
@@ -76,6 +77,10 @@ describe("Transactions Component", () => {
       "12345678901"
     );
     await user.type(screen.getByLabelText(/Amount/i), mockAmount);
+    await user.selectOptions(
+      screen.getByLabelText(/Transaction Type:/i),
+      "TED"
+    );
 
     // Click the transfer button
     await user.click(screen.getByRole("button", { name: /Transfer/i }));
@@ -94,6 +99,7 @@ describe("Transactions Component", () => {
     expect(updatedUser.balance).toBe(500);
     expect(updatedUser.transactions.length).toBe(1);
     expect(updatedUser.transactions[0].value).toBe(500);
+    expect(updatedUser.transactions[0].type).toBe("TED");
   });
 
   it("should show an error for insufficient funds and not update the store", async () => {

@@ -1,3 +1,4 @@
+// Transactions.tsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
@@ -14,6 +15,7 @@ const Transactions = () => {
   const [amount, setAmount] = useState<number | "">("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [transactionType, setTransactionType] = useState("PIX");
 
   const handleTransaction = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +36,7 @@ const Transactions = () => {
       const newBalance = user.balance - amount;
       const transaction = {
         id: Date.now().toString(),
-        type: "PIX/TED",
+        type: transactionType,
         date: new Date().toISOString(),
         value: amount,
         balanceAfter: newBalance,
@@ -99,6 +101,17 @@ const Transactions = () => {
               onChange={(e) => setAmount(parseFloat(e.target.value) || "")}
               required
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="transactionType">Transaction Type:</label>
+            <select
+              id="transactionType"
+              value={transactionType}
+              onChange={(e) => setTransactionType(e.target.value)}
+            >
+              <option value="PIX">PIX</option>
+              <option value="TED">TED</option>
+            </select>
           </div>
           <button type="submit" className="action-btn">
             Transfer
