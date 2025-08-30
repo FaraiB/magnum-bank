@@ -7,7 +7,14 @@ export interface Transaction {
   date: string;
   value: number;
   balanceAfter: number;
+  recipientName: string;
+  recipientCpf: string;
+  bank?: string;
+  branch?: string;
+  account?: string;
+  pixKey?: string;
 }
+
 interface UserState {
   id: string | null;
   name: string | null;
