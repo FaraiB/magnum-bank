@@ -15,6 +15,7 @@ const Home = () => {
       navigate("/login");
     }
   }, [user, navigate]);
+
   if (!user || !user.id) {
     return null;
   }
@@ -22,7 +23,12 @@ const Home = () => {
   const handleLogout = () => {
     dispatch(clearUser());
     localStorage.removeItem("user_id");
+    localStorage.removeItem("auth_token");
   };
+
+  // Get the last 3 transactions for the summary
+  const latestTransactions = user.transactions.slice(0, 3);
+
   return (
     <div className="container">
       <nav className="navbar">
@@ -47,6 +53,25 @@ const Home = () => {
           <button className="action-btn" onClick={() => navigate("/history")}>
             Transaction History
           </button>
+        </div>
+
+        <div className="transaction-summary">
+          <h3>Latest Transactions</h3>
+          {latestTransactions.length > 0 ? (
+            <ul>
+              {latestTransactions.map((transaction) => (
+                <li key={transaction.id}>
+                  <p>
+                    {new Date(transaction.date).toLocaleDateString()} -{" "}
+                    {transaction.type}: R${" "}
+                    {Math.abs(transaction.value).toFixed(2)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No recent transactions.</p>
+          )}
         </div>
       </div>
     </div>
