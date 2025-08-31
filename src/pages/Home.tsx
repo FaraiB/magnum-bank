@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
-import { clearUser } from "../redux/userSlice";
-import { useDispatch } from "react-redux";
 import { useEffect, memo } from "react";
 import Layout from "../components/Layout";
 import "./Home.css";
@@ -16,7 +14,6 @@ const Home = () => {
   const user = useSelector((state: RootState) => state.user);
   const latestTransactions = useSelector(selectLatestTransactions);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user || !user.id) {
@@ -28,21 +25,9 @@ const Home = () => {
     return null;
   }
 
-  const handleLogout = () => {
-    dispatch(clearUser());
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("auth_token");
-  };
-
   return (
     <Layout>
       <div className="container">
-        <nav className="navbar">
-          <h1>Magnum Bank</h1>
-          <button onClick={handleLogout} className="logout-btn">
-            Logout
-          </button>
-        </nav>
         <div className="content">
           <h2>Welcome, {user.name}</h2>
           <BalanceCard balance={user.balance} />

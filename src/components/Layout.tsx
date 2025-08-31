@@ -1,5 +1,8 @@
 import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../redux/userSlice";
+
 import "./Layout.css";
 
 interface LayoutProps {
@@ -7,6 +10,14 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("auth_token");
+  };
+
   return (
     <div className="layout-container">
       <nav className="main-nav">
@@ -21,6 +32,9 @@ const Layout = ({ children }: LayoutProps) => {
           <Link to="/history" className="nav-link">
             History
           </Link>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
         </div>
       </nav>
       <main className="main-content">{children}</main>
