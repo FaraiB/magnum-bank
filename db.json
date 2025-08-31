@@ -4,7 +4,7 @@
       "id": "1",
       "name": "Maria Silva",
       "cpf": "12345678900",
-      "password": "senha",
+      "password": "pass123",
       "balance": 5000,
       "transactions": []
     }

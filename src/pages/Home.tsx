@@ -6,9 +6,15 @@ import { useDispatch } from "react-redux";
 import { useEffect, memo } from "react";
 import Layout from "../components/Layout";
 import "./Home.css";
+import BalanceCard from "../components/BalanceCard";
+import LatestTransactions from "../components/LatestTransactions";
+
+const selectLatestTransactions = (state: RootState) =>
+  state.user.transactions.slice(0, 3);
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
+  const latestTransactions = useSelector(selectLatestTransactions);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,8 +34,6 @@ const Home = () => {
     localStorage.removeItem("auth_token");
   };
 
-  const latestTransactions = user.transactions.slice(0, 3);
-
   return (
     <Layout>
       <div className="container">
@@ -41,10 +45,7 @@ const Home = () => {
         </nav>
         <div className="content">
           <h2>Welcome, {user.name}</h2>
-          <div className="balance-card">
-            <h3>Current Balance</h3>
-            <p className="balance-amount">R$ {user.balance.toFixed(2)}</p>
-          </div>
+          <BalanceCard balance={user.balance} />
           <div className="actions">
             <button
               className="action-btn"
@@ -56,25 +57,7 @@ const Home = () => {
               Transaction History
             </button>
           </div>
-
-          <div className="transaction-summary">
-            <h3>Latest Transactions</h3>
-            {latestTransactions.length > 0 ? (
-              <ul>
-                {latestTransactions.map((transaction) => (
-                  <li key={transaction.id}>
-                    <p>
-                      {new Date(transaction.date).toLocaleDateString()} -{" "}
-                      {transaction.type}: R${" "}
-                      {Math.abs(transaction.value).toFixed(2)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No recent transactions.</p>
-            )}
-          </div>
+          <LatestTransactions transactions={latestTransactions} />
         </div>
       </div>
     </Layout>
