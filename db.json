@@ -9,5 +9,30 @@
       "transactions": []
     }
   ],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "1678912345678",
+      "userId": "1",
+      "type": "PIX",
+      "date": "2025-08-25T10:00:00Z",
+      "value": -150.0,
+      "balanceAfter": 4850.0,
+      "recipientName": "João de Souza",
+      "recipientCpf": "11122233344",
+      "pixKey": "joaosouza@email.com"
+    },
+    {
+      "id": "1678912345679",
+      "userId": "1",
+      "type": "TED",
+      "date": "2025-08-26T12:30:00Z",
+      "value": -250.5,
+      "balanceAfter": 4600.5,
+      "recipientName": "Pedro Almeida",
+      "recipientCpf": "99988877766",
+      "bank": "Banco A",
+      "branch": "001",
+      "account": "12345-6"
+    }
+  ]
 }

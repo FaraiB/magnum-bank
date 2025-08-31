@@ -29,15 +29,6 @@
   background-color: #0056b3;
 }
 
-.logout-btn {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.logout-btn:hover {
-  background-color: #c82333;
+.validation-error {
+  font-style: italic;
 }
