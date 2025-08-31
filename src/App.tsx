@@ -24,7 +24,6 @@ function App() {
         })
         .catch((err) => {
           console.error("Failed to fetch user data with token:", err);
-          // Handle invalid token by logging out the user
           localStorage.removeItem("user_id");
           localStorage.removeItem("auth_token");
         });

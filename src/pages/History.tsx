@@ -1,16 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
-import { useNavigate } from "react-router-dom";
-import { type Transaction } from "../redux/userSlice";
+import Layout from "../components/Layout";
+import "../styles.css";
 
 const History = () => {
-  const navigate = useNavigate();
   const allTransactions = useSelector(
     (state: RootState) => state.user.transactions
   );
 
-  // State for filtering and sorting
   const [filterType, setFilterType] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -18,43 +16,56 @@ const History = () => {
   const [maxAmount, setMaxAmount] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  // Filtering Logic
-  const filteredTransactions = allTransactions.filter(
-    (transaction: Transaction) => {
-      // Filter by transaction type
-      if (filterType !== "all" && transaction.type !== filterType) {
-        return false;
-      }
+  const filteredAndSortedTransactions = useMemo(() => {
+    let filteredTransactions = [...allTransactions];
 
-      // Filter by date range
-      if (startDate && new Date(transaction.date) < new Date(startDate)) {
-        return false;
-      }
-      if (endDate && new Date(transaction.date) > new Date(endDate)) {
-        return false;
-      }
-
-      // Filter by amount range
-      const amount = Math.abs(transaction.value);
-      if (minAmount && amount < parseFloat(minAmount)) {
-        return false;
-      }
-      if (maxAmount && amount > parseFloat(maxAmount)) {
-        return false;
-      }
-
-      return true;
+    // Filter by type
+    if (filterType !== "all") {
+      filteredTransactions = filteredTransactions.filter(
+        (t) => t.type === filterType
+      );
     }
-  );
 
-  // Sorting Logic
-  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-  });
+    // Filter by date range
+    if (startDate) {
+      filteredTransactions = filteredTransactions.filter(
+        (t) => new Date(t.date) >= new Date(startDate)
+      );
+    }
+    if (endDate) {
+      filteredTransactions = filteredTransactions.filter(
+        (t) => new Date(t.date) <= new Date(endDate)
+      );
+    }
 
-  // Helper function to handle period filters
+    // Filter by amount range
+    if (minAmount) {
+      filteredTransactions = filteredTransactions.filter(
+        (t) => Math.abs(t.value) >= parseFloat(minAmount)
+      );
+    }
+    if (maxAmount) {
+      filteredTransactions = filteredTransactions.filter(
+        (t) => Math.abs(t.value) <= parseFloat(maxAmount)
+      );
+    }
+
+    // Sort transactions
+    return filteredTransactions.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+  }, [
+    allTransactions,
+    filterType,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    sortOrder,
+  ]);
+
   const handlePeriodFilter = (days: number) => {
     const today = new Date();
     const pastDate = new Date();
@@ -63,7 +74,6 @@ const History = () => {
     setEndDate(today.toISOString().substring(0, 10));
   };
 
-  // New handler to reset all filters
   const handleResetFilters = () => {
     setFilterType("all");
     setStartDate("");
@@ -73,19 +83,12 @@ const History = () => {
   };
 
   return (
-    <div className="container">
-      <nav className="navbar">
-        <h1>Transaction History</h1>
-        <button onClick={() => navigate("/")} className="action-btn">
-          Back to Home
-        </button>
-      </nav>
-      <div className="content">
-        <h2>Your Transactions</h2>
-
+    <Layout>
+      <div className="history-page">
+        <h1 className="page-title">Transaction History</h1>
         <div className="filter-controls">
           <div className="filter-group">
-            <label htmlFor="filterType">Filter by Type:</label>
+            <label htmlFor="filterType">Type:</label>
             <select
               id="filterType"
               value={filterType}
@@ -97,8 +100,7 @@ const History = () => {
             </select>
           </div>
 
-          <div className="filter-group">
-            <label>Filter by Period:</label>
+          <div className="period-filters">
             <button onClick={() => handlePeriodFilter(7)}>Last 7 days</button>
             <button onClick={() => handlePeriodFilter(15)}>Last 15 days</button>
             <button onClick={() => handlePeriodFilter(30)}>Last 30 days</button>
@@ -123,7 +125,7 @@ const History = () => {
           </div>
 
           <div className="filter-group">
-            <label htmlFor="minAmount">Min Amount (R$):</label>
+            <label htmlFor="minAmount">Min Amount:</label>
             <input
               type="number"
               id="minAmount"
@@ -131,7 +133,7 @@ const History = () => {
               onChange={(e) => setMinAmount(e.target.value)}
               placeholder="0.00"
             />
-            <label htmlFor="maxAmount">Max Amount (R$):</label>
+            <label htmlFor="maxAmount">Max Amount:</label>
             <input
               type="number"
               id="maxAmount"
@@ -141,7 +143,7 @@ const History = () => {
             />
           </div>
 
-          <button onClick={handleResetFilters} className="action-btn">
+          <button onClick={handleResetFilters} className="reset-btn">
             Reset Filters
           </button>
         </div>
@@ -159,9 +161,9 @@ const History = () => {
         </div>
 
         <div className="transaction-list">
-          {sortedTransactions.length > 0 ? (
+          {filteredAndSortedTransactions.length > 0 ? (
             <ul>
-              {sortedTransactions.map((transaction) => (
+              {filteredAndSortedTransactions.map((transaction) => (
                 <li key={transaction.id} className="transaction-item">
                   <div className="transaction-details">
                     <p>
@@ -184,11 +186,11 @@ const History = () => {
               ))}
             </ul>
           ) : (
-            <p>No transactions found.</p>
+            <p className="no-transactions">No transactions found.</p>
           )}
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
