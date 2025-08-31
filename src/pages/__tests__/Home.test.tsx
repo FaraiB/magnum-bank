@@ -95,7 +95,9 @@ describe("Home Component", () => {
     renderWithProviders(<Home />, { store });
 
     // Check layout navigation elements (now in Layout component)
-    expect(screen.getByText("Magnum Bank")).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", { name: /magnum bank/i })
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /transactions/i })

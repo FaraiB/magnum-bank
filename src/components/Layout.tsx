@@ -21,7 +21,10 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="layout-container">
       <nav className="main-nav">
-        <h1 className="logo">Magnum Bank</h1>
+        {/* <h1 className="logo">Magnum Bank</h1> */}
+        <Link to="/">
+          <img src="src/assets/logo-magnum.png" alt="Magnum Bank" />
+        </Link>
         <div className="nav-links">
           <Link to="/" className="nav-link">
             Home
