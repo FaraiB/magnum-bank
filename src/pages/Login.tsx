@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login, setAuthToken } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
+import "./Login.css";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");

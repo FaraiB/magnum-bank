@@ -8,6 +8,7 @@ import {
   type Transaction,
 } from "../redux/userSlice";
 import Layout from "../components/Layout";
+import "./Transactions.css";
 
 const Transactions = () => {
   const user = useSelector((state: RootState) => state.user);

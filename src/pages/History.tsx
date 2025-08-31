@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
 import Layout from "../components/Layout";
-import "../styles.css";
+import "./History.css";
 
 const History = () => {
   const allTransactions = useSelector(

@@ -5,6 +5,7 @@ import { clearUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import { useEffect, memo } from "react";
 import Layout from "../components/Layout";
+import "./Home.css";
 
 const Home = () => {
   const user = useSelector((state: RootState) => state.user);
