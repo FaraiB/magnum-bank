@@ -15,6 +15,9 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
             <li key={transaction.id} className="transaction-item">
               <div className="transaction-details">
                 <p>
+                  <strong>Name:</strong> {transaction.recipientName}
+                </p>
+                <p>
                   <strong>Type:</strong> {transaction.type}
                 </p>
                 <p>
