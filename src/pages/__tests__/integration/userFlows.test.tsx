@@ -1,4 +1,3 @@
-// src/__tests__/integration/userFlows.test.tsx
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
