@@ -7,4 +7,7 @@ export default defineConfig({
         environment: "jsdom",
         setupFiles: ["./src/setupTests.ts"],
     },
+    esbuild: {
+        target: "es2022",
+    },
 });
