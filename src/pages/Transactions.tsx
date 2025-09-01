@@ -1,7 +1,6 @@
 import { useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../redux/store";
-import { useNavigate } from "react-router-dom";
 import {
   addTransaction,
   setBalance,
@@ -18,7 +17,6 @@ import TransactionForm, {
 const Transactions = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
