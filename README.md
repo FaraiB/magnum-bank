@@ -210,11 +210,9 @@ npm run build
 
 Os arquivos de produção serão gerados na pasta `dist/`.
 
-### Plataformas Recomendadas
+### Demonstração
 
-- **Vercel**: Deploy automático via GitHub
-- **Netlify**: Integração contínua simples
-- **Surge**: Deploy rápido via CLI
+- **Vercel**: https://magnum-bank-ten.vercel.app/
 
 ### Configuração de Deploy
 
