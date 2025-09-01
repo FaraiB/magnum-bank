@@ -89,12 +89,14 @@ describe("Integration Tests - User Flows", () => {
     renderWithStore(<Login />, store);
 
     // Verify we're on login page
-    expect(screen.getByRole("heading", { name: /login/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /magnum bank/i })
+    ).toBeInTheDocument();
 
     // Fill out login form using proper selectors
-    await user.type(screen.getByLabelText("CPF:"), "12345678901");
-    await user.type(screen.getByLabelText("Password:"), "password123");
-    await user.click(screen.getByRole("button", { name: /login/i }));
+    await user.type(screen.getByLabelText("CPF"), "12345678901");
+    await user.type(screen.getByLabelText("Password"), "password123");
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
 
     // Verify API was called correctly
     expect(login).toHaveBeenCalledWith("12345678901", "password123");

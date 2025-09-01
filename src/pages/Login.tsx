@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { login, setAuthToken } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
-import "./Login.css";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");
@@ -60,38 +59,86 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleLogin} className="login-form">
-        <h2>Login</h2>
-        {error && <p className="error-message">{error}</p>}
-        <div className="form-group">
-          <label htmlFor="cpf">CPF:</label>
-          <input
-            type="text"
-            id="cpf"
-            value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
-            required
-          />
-          {validationErrors.cpf && (
-            <p className="validation-error">{validationErrors.cpf}</p>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div className="bg-white rounded-lg shadow-lg px-8 py-10">
+          <div className="flex flex-col items-center justify-center mb-8">
+            <img src="src/assets/logo-magnum.png" alt="Magnum Bank" />
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              Magnum Bank
+            </h2>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            {error && (
+              <div className="bg-red-50 border border-red-200 rounded-md p-4">
+                <p className="text-red-700 text-sm font-medium">{error}</p>
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <label
+                htmlFor="cpf"
+                className="block text-sm font-medium text-gray-700"
+              >
+                CPF
+              </label>
+              <input
+                type="text"
+                id="cpf"
+                value={cpf}
+                onChange={(e) => setCpf(e.target.value)}
+                required
+                className={`w-full px-3 py-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors ${
+                  validationErrors.cpf
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300 bg-white"
+                }`}
+                placeholder="000.000.000-00"
+              />
+              {validationErrors.cpf && (
+                <p className="text-red-600 text-xs mt-1 font-medium">
+                  {validationErrors.cpf}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className={`w-full px-3 py-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors ${
+                  validationErrors.password
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300 bg-white"
+                }`}
+                placeholder="Enter your password"
+              />
+              {validationErrors.password && (
+                <p className="text-red-600 text-xs mt-1 font-medium">
+                  {validationErrors.password}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
+            >
+              Sign In
+            </button>
+          </form>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          {validationErrors.password && (
-            <p className="validation-error">{validationErrors.password}</p>
-          )}
-        </div>
-        <button type="submit">Login</button>
-      </form>
+      </div>
     </div>
   );
 };

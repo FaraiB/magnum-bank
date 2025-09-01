@@ -8,7 +8,6 @@ import {
   type Transaction,
 } from "../redux/userSlice";
 import Layout from "../components/Layout";
-import "./Transactions.css";
 import PasswordModal from "../components/PasswordModal";
 import SummaryModal from "../components/SummaryModal";
 import BalanceCard from "../components/BalanceCard";
@@ -77,14 +76,12 @@ const Transactions = () => {
 
   return (
     <Layout>
-      <div className="container">
-        <nav className="navbar">
-          <h1>New Transaction</h1>
-          <button onClick={() => navigate("/")} className="action-btn">
-            Back to Home
-          </button>
-        </nav>
-        <div className="content">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">New Transaction</h1>
+        </div>
+
+        <div className="space-y-8">
           <BalanceCard balance={user.balance} />
           <TransactionForm
             key={formKey}

@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import "../pages/Home.css";
 
 type Transaction = {
   id: string;
@@ -16,21 +15,35 @@ const LatestTransactions: React.FC<LatestTransactionsProps> = ({
   transactions,
 }) => {
   return (
-    <div className="transaction-summary">
-      <h3>Latest Transactions</h3>
+    <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+      <h3 className="text-lg font-medium text-gray-900 mb-4">
+        Latest Transactions
+      </h3>
       {transactions.length > 0 ? (
-        <ul>
+        <div className="space-y-3">
           {transactions.map((transaction) => (
-            <li key={transaction.id}>
-              <p>
-                {new Date(transaction.date).toLocaleDateString()} -{" "}
-                {transaction.type}: R$ {Math.abs(transaction.value).toFixed(2)}
-              </p>
-            </li>
+            <div
+              key={transaction.id}
+              className="flex justify-between items-center py-3 px-4 bg-gray-50 rounded-md border border-gray-100"
+            >
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-900">
+                  {transaction.type}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {new Date(transaction.date).toLocaleDateString()}
+                </span>
+              </div>
+              <span className="text-sm font-medium text-red-600">
+                R$ {Math.abs(transaction.value).toFixed(2)}
+              </span>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>No recent transactions.</p>
+        <div className="text-center py-8">
+          <p className="text-gray-500 text-sm">No recent transactions.</p>
+        </div>
       )}
     </div>
   );

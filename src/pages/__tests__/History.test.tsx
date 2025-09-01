@@ -87,8 +87,8 @@ describe("History Component", () => {
     expect(screen.getByLabelText(/type:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/start date:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/end date:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/min amount:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/max amount:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/min amount \(R\$\):/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/max amount \(R\$\):/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/sort by date:/i)).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /reset filters/i })

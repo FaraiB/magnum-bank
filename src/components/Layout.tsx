@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../redux/userSlice";
 
-import "./Layout.css";
-
 interface LayoutProps {
   children: ReactNode;
 }
@@ -19,28 +17,47 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   return (
-    <div className="layout-container">
-      <nav className="main-nav">
-        {/* <h1 className="logo">Magnum Bank</h1> */}
-        <Link to="/">
-          <img src="src/assets/logo-magnum.png" alt="Magnum Bank" />
-        </Link>
-        <div className="nav-links">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-          <Link to="/transactions" className="nav-link">
-            Transactions
-          </Link>
-          <Link to="/history" className="nav-link">
-            History
-          </Link>
-          <button onClick={handleLogout} className="logout-btn">
-            Logout
-          </button>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link to="/" className="flex-shrink-0">
+              <img
+                src="src/assets/logo-magnum.png"
+                alt="Magnum Bank"
+                className="h-8 w-auto"
+              />
+            </Link>
+            <div className="flex items-center space-x-8">
+              <Link
+                to="/"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              >
+                Home
+              </Link>
+              <Link
+                to="/transactions"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              >
+                Transactions
+              </Link>
+              <Link
+                to="/history"
+                className="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              >
+                History
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
-      <main className="main-content">{children}</main>
+      <main className="flex-1">{children}</main>
     </div>
   );
 };

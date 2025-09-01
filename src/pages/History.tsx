@@ -4,7 +4,6 @@ import { type RootState } from "../redux/store";
 import Layout from "../components/Layout";
 import HistoryFilters from "../components/HistoryFilters";
 import TransactionList from "../components/TransactionList";
-import "./History.css";
 
 const History = () => {
   const allTransactions = useSelector(
@@ -82,25 +81,35 @@ const History = () => {
 
   return (
     <Layout>
-      <div className="history-page">
-        <h1 className="page-title">Transaction History</h1>
-        <HistoryFilters
-          filterType={filterType}
-          setFilterType={setFilterType}
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}
-          minAmount={minAmount}
-          setMinAmount={setMinAmount}
-          maxAmount={maxAmount}
-          setMaxAmount={setMaxAmount}
-          handlePeriodFilter={handlePeriodFilter}
-          handleResetFilters={handleResetFilters}
-          sortOrder={sortOrder}
-          setSortOrder={setSortOrder}
-        />
-        <TransactionList transactions={filteredAndSortedTransactions} />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Transaction History
+          </h1>
+          <p className="text-gray-600">
+            Review and filter your transaction history
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          <HistoryFilters
+            filterType={filterType}
+            setFilterType={setFilterType}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            minAmount={minAmount}
+            setMinAmount={setMinAmount}
+            maxAmount={maxAmount}
+            setMaxAmount={setMaxAmount}
+            handlePeriodFilter={handlePeriodFilter}
+            handleResetFilters={handleResetFilters}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+          />
+          <TransactionList transactions={filteredAndSortedTransactions} />
+        </div>
       </div>
     </Layout>
   );

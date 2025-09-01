@@ -18,8 +18,12 @@ describe("Login Component", () => {
     // Assert that the login form elements are present
     expect(screen.getByLabelText(/CPF/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Login/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /Login/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /Sign In/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Magnum Bank/i })
+    ).toBeInTheDocument();
   });
 
   it("handles successful login", async () => {
@@ -35,7 +39,7 @@ describe("Login Component", () => {
 
     await user.type(screen.getByLabelText(/cpf/i), "12345678901");
     await user.type(screen.getByLabelText(/password/i), "password123");
-    await user.click(screen.getByRole("button", { name: /login/i }));
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
 
     expect(mockLogin).toHaveBeenCalledWith("12345678901", "password123");
   });
@@ -47,7 +51,7 @@ describe("Login Component", () => {
     renderWithProviders(<Login />);
     await user.type(screen.getByLabelText(/cpf/i), "12345678901");
     await user.type(screen.getByLabelText(/password/i), "wrongpassword");
-    await user.click(screen.getByRole("button", { name: /login/i }));
+    await user.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() => {
       expect(screen.getByText(/invalid cpf or password/i)).toBeInTheDocument();
