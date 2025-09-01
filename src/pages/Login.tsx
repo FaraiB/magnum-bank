@@ -63,7 +63,7 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white rounded-lg shadow-lg px-8 py-10">
           <div className="flex flex-col items-center justify-center mb-8">
-            <img src="src/assets/logo-magnum.png" alt="Magnum Bank" />
+            <img src="logo-magnum.png" alt="Magnum Bank" />
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               Magnum Bank
             </h2>

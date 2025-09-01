@@ -23,7 +23,7 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex-shrink-0">
               <img
-                src="src/assets/logo-magnum.png"
+                src="/logo-magnum.png"
                 alt="Magnum Bank"
                 className="h-8 w-auto"
               />
