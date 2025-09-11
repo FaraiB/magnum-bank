@@ -5,6 +5,21 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice, { type Transaction } from "./redux/userSlice";
 
+import { I18nextProvider } from "react-i18next";
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import testTranslations from "./i18n/locales/test.json";
+
+i18n.use(initReactI18next).init({
+  lng: "en",
+  fallbackLng: "en",
+  resources: {
+    en: {
+      translation: testTranslations,
+    },
+  },
+});
+
 // Support both store and preloadedState approaches
 interface TestRenderOptions {
   store?: any; // For existing tests that create their own stores
@@ -38,7 +53,9 @@ export const renderWithProviders = (
 
   return render(
     <Provider store={testStore}>
-      <BrowserRouter>{component}</BrowserRouter>
+      <I18nextProvider i18n={i18n}>
+        <BrowserRouter>{component}</BrowserRouter>
+      </I18nextProvider>
     </Provider>
   );
 };

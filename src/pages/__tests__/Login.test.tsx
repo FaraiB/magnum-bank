@@ -16,10 +16,10 @@ describe("Login Component", () => {
     renderWithProviders(<Login />);
 
     // Assert that the login form elements are present
-    expect(screen.getByLabelText(/CPF/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText("auth.cpf")).toBeInTheDocument();
+    expect(screen.getByLabelText("auth.password")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Sign In/i })
+      screen.getByRole("button", { name: "auth.loginButton" })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /Magnum Bank/i })
@@ -37,9 +37,9 @@ describe("Login Component", () => {
 
     renderWithProviders(<Login />);
 
-    await user.type(screen.getByLabelText(/cpf/i), "12345678901");
-    await user.type(screen.getByLabelText(/password/i), "password123");
-    await user.click(screen.getByRole("button", { name: /sign in/i }));
+    await user.type(screen.getByLabelText("auth.cpf"), "12345678901");
+    await user.type(screen.getByLabelText("auth.password"), "password123");
+    await user.click(screen.getByRole("button", { name: "auth.loginButton" }));
 
     expect(mockLogin).toHaveBeenCalledWith("12345678901", "password123");
   });
@@ -49,12 +49,12 @@ describe("Login Component", () => {
     mockLogin.mockRejectedValueOnce(new Error("Invalid credentials"));
 
     renderWithProviders(<Login />);
-    await user.type(screen.getByLabelText(/cpf/i), "12345678901");
-    await user.type(screen.getByLabelText(/password/i), "wrongpassword");
-    await user.click(screen.getByRole("button", { name: /sign in/i }));
+    await user.type(screen.getByLabelText("auth.cpf"), "12345678901");
+    await user.type(screen.getByLabelText("auth.password"), "wrongpassword");
+    await user.click(screen.getByRole("button", { name: "auth.loginButton" }));
 
     await waitFor(() => {
-      expect(screen.getByText(/invalid cpf or password/i)).toBeInTheDocument();
+      expect(screen.getByText("auth.loginError")).toBeInTheDocument();
     });
   });
 });

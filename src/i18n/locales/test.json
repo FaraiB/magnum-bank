@@ -1,0 +1,152 @@
+{
+  "nav": {
+    "home": "nav.home",
+    "transactions": "nav.transactions",
+    "history": "nav.history",
+    "logout": "nav.logout"
+  },
+  "auth": {
+    "cpf": "auth.cpf",
+    "password": "auth.password",
+    "loginButton": "auth.loginButton",
+    "loginError": "auth.loginError",
+    "cpfPlaceholder": "auth.cpfPlaceholder",
+    "passwordPlaceholder": "auth.passwordPlaceholder",
+    "passwordError": "auth.passwordError",
+    "cpfError": "auth.cpfError"
+  },
+  "home": {
+    "welcome": "home.welcome",
+    "subtitle": "home.subtitle",
+    "currentBalance": "home.currentBalance",
+    "newTransaction": "home.newTransaction",
+    "transactionHistory": "home.transactionHistory",
+    "latestTransactions": "home.latestTransactions",
+    "noRecentTransactions": "home.noRecentTransactions"
+  },
+  "transactions": {
+    "title": "transactions.title",
+    "subtitle": "transactions.subtitle",
+    "type": "transactions.type",
+    "pix": "transactions.pix",
+    "ted": "transactions.ted",
+    "amount": "transactions.amount",
+    "amountPlaceholder": "transactions.amountPlaceholder",
+    "recipient": "transactions.recipient",
+    "recipientPlaceholder": "transactions.recipientPlaceholder",
+    "description": "transactions.description",
+    "descriptionPlaceholder": "transactions.descriptionPlaceholder",
+    "submit": "transactions.submit",
+    "cancel": "transactions.cancel",
+    "pixDescription": "transactions.pixDescription",
+    "tedDescription": "transactions.tedDescription",
+    "validation": {
+      "amountRequired": "transactions.validation.amountRequired",
+      "amountMinimum": "transactions.validation.amountMinimum",
+      "recipientRequired": "transactions.validation.recipientRequired",
+      "insufficientFunds": "transactions.validation.insufficientFunds"
+    }
+  },
+  "history": {
+    "title": "history.title",
+    "subtitle": "history.subtitle",
+    "filters": "history.filters",
+    "dateRange": "history.dateRange",
+    "type": "history.type",
+    "allTypes": "history.allTypes",
+    "status": "history.status",
+    "allStatus": "history.allStatus",
+    "apply": "history.apply",
+    "clear": "history.clear",
+    "noTransactions": "history.noTransactions",
+    "loadMore": "history.loadMore",
+    "sortBy": "history.sortBy",
+    "date": "history.date",
+    "amount": "history.amount",
+    "columns": {
+      "date": "history.columns.date",
+      "type": "history.columns.type",
+      "recipient": "history.columns.recipient",
+      "amount": "history.columns.amount",
+      "status": "history.columns.status",
+      "description": "history.columns.description"
+    },
+    "status": {
+      "completed": "history.status.completed",
+      "pending": "history.status.pending",
+      "failed": "history.status.failed",
+      "cancelled": "history.status.cancelled"
+    }
+  },
+  "modals": {
+    "password": {
+      "title": "modals.password.title",
+      "subtitle": "modals.password.subtitle",
+      "passwordLabel": "modals.password.passwordLabel",
+      "confirm": "modals.password.confirm",
+      "cancel": "modals.password.cancel",
+      "error": "modals.password.error"
+    },
+    "summary": {
+      "title": "modals.summary.title",
+      "type": "modals.summary.type",
+      "recipient": "modals.summary.recipient",
+      "amount": "modals.summary.amount",
+      "description": "modals.summary.description",
+      "date": "modals.summary.date",
+      "confirm": "modals.summary.confirm",
+      "cancel": "modals.summary.cancel",
+      "processing": "modals.summary.processing"
+    },
+    "success": {
+      "title": "modals.success.title",
+      "message": "modals.success.message",
+      "viewHistory": "modals.success.viewHistory",
+      "newTransaction": "modals.success.newTransaction"
+    },
+    "error": {
+      "title": "modals.error.title",
+      "message": "modals.error.message",
+      "tryAgain": "modals.error.tryAgain",
+      "close": "modals.error.close"
+    }
+  },
+  "common": {
+    "loading": "common.loading",
+    "error": "common.error",
+    "success": "common.success",
+    "save": "common.save",
+    "cancel": "common.cancel",
+    "confirm": "common.confirm",
+    "close": "common.close",
+    "back": "common.back",
+    "next": "common.next",
+    "previous": "common.previous",
+    "search": "common.search",
+    "filter": "common.filter",
+    "sort": "common.sort",
+    "currency": "common.currency",
+    "noData": "common.noData",
+    "selectOption": "common.selectOption"
+  },
+  "balance": {
+    "current": "balance.current",
+    "available": "balance.available",
+    "blocked": "balance.blocked",
+    "updated": "balance.updated"
+  },
+  "notifications": {
+    "transactionSuccess": "notifications.transactionSuccess",
+    "transactionError": "notifications.transactionError",
+    "loginSuccess": "notifications.loginSuccess",
+    "logoutSuccess": "notifications.logoutSuccess",
+    "updateSuccess": "notifications.updateSuccess"
+  },
+  "errors": {
+    "networkError": "errors.networkError",
+    "serverError": "errors.serverError",
+    "validationError": "errors.validationError",
+    "authError": "errors.authError",
+    "notFound": "errors.notFound"
+  }
+}

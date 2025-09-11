@@ -1,0 +1,152 @@
+{
+  "nav": {
+    "home": "Home",
+    "transactions": "Transações",
+    "history": "Histórico",
+    "logout": "Sair"
+  },
+  "auth": {
+    "cpf": "CPF",
+    "password": "Senha",
+    "loginButton": "Entrar",
+    "loginError": "CPF ou senha inválidos",
+    "cpfPlaceholder": "000.000.000-00",
+    "passwordPlaceholder": "Digite sua senha",
+    "passwordError": "A senha deve ter pelo menos 6 caracteres.",
+    "cpfError": "O CPF deve ter 11 dígitos."
+  },
+  "home": {
+    "welcome": "Bem-vindo, {{name}}",
+    "subtitle": "Gerencie suas finanças com confiança",
+    "currentBalance": "Saldo Atual",
+    "newTransaction": "Nova Transação",
+    "transactionHistory": "Histórico de Transações",
+    "latestTransactions": "Últimas Transações",
+    "noRecentTransactions": "Nenhuma transação recente."
+  },
+  "transactions": {
+    "title": "Nova Transação",
+    "subtitle": "Envie dinheiro com segurança",
+    "type": "Tipo de Transação",
+    "pix": "PIX",
+    "ted": "TED",
+    "amount": "Valor",
+    "amountPlaceholder": "0,00",
+    "recipient": "Destinatário",
+    "recipientPlaceholder": "Nome ou CPF do destinatário",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Descrição da transação (opcional)",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "pixDescription": "Transferência instantânea 24h",
+    "tedDescription": "Transferência entre bancos",
+    "validation": {
+      "amountRequired": "Valor é obrigatório",
+      "amountMinimum": "Valor mínimo é R$ 0,01",
+      "recipientRequired": "Destinatário é obrigatório",
+      "insufficientFunds": "Saldo insuficiente"
+    }
+  },
+  "history": {
+    "title": "Histórico de Transações",
+    "subtitle": "Visualize todas as suas movimentações",
+    "filters": "Filtros",
+    "dateRange": "Período",
+    "type": "Tipo",
+    "allTypes": "Todos os tipos",
+    "status": "Status",
+    "allStatus": "Todos os status",
+    "apply": "Aplicar",
+    "clear": "Limpar",
+    "noTransactions": "Nenhuma transação encontrada",
+    "loadMore": "Carregar mais",
+    "sortBy": "Ordenar por",
+    "date": "Data",
+    "amount": "Valor",
+    "columns": {
+      "date": "Data",
+      "type": "Tipo",
+      "recipient": "Destinatário",
+      "amount": "Valor",
+      "status": "Status",
+      "description": "Descrição"
+    },
+    "status": {
+      "completed": "Concluída",
+      "pending": "Pendente",
+      "failed": "Falhou",
+      "cancelled": "Cancelada"
+    }
+  },
+  "modals": {
+    "password": {
+      "title": "Confirmar Transação",
+      "subtitle": "Digite sua senha para confirmar",
+      "passwordLabel": "Senha",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "error": "Senha incorreta"
+    },
+    "summary": {
+      "title": "Resumo da Transação",
+      "type": "Tipo",
+      "recipient": "Destinatário",
+      "amount": "Valor",
+      "description": "Descrição",
+      "date": "Data",
+      "confirm": "Confirmar Transação",
+      "cancel": "Cancelar",
+      "processing": "Processando..."
+    },
+    "success": {
+      "title": "Transação Realizada",
+      "message": "Sua transação foi processada com sucesso",
+      "viewHistory": "Ver Histórico",
+      "newTransaction": "Nova Transação"
+    },
+    "error": {
+      "title": "Erro na Transação",
+      "message": "Ocorreu um erro ao processar sua transação",
+      "tryAgain": "Tentar Novamente",
+      "close": "Fechar"
+    }
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "currency": "R$",
+    "noData": "Nenhum dado disponível",
+    "selectOption": "Selecione uma opção"
+  },
+  "balance": {
+    "current": "Saldo Atual",
+    "available": "Saldo Disponível",
+    "blocked": "Saldo Bloqueado",
+    "updated": "Atualizado em"
+  },
+  "notifications": {
+    "transactionSuccess": "Transação realizada com sucesso",
+    "transactionError": "Erro ao processar transação",
+    "loginSuccess": "Login realizado com sucesso",
+    "logoutSuccess": "Logout realizado com sucesso",
+    "updateSuccess": "Informações atualizadas com sucesso"
+  },
+  "errors": {
+    "networkError": "Erro de conexão. Verifique sua internet.",
+    "serverError": "Erro no servidor. Tente novamente mais tarde.",
+    "validationError": "Verifique os dados informados.",
+    "authError": "Erro de autenticação. Faça login novamente.",
+    "notFound": "Página não encontrada"
+  }
+}

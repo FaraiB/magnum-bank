@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { login, setAuthToken } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
+import { t } from "i18next";
+import { LanguageSwitcher } from "../i18n/components/LanguageProvider";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");
@@ -28,7 +30,7 @@ const Login = () => {
     if (cpf.length !== 11 || !/^\d+$/.test(cpf)) {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
-        cpf: "CPF must be 11 digits.",
+        cpf: t("auth.cpfError"),
       }));
       hasError = true;
     }
@@ -37,7 +39,7 @@ const Login = () => {
     if (password.length < 6) {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
-        password: "Password must be at least 6 characters.",
+        password: t("auth.passwordError"),
       }));
       hasError = true;
     }
@@ -54,12 +56,15 @@ const Login = () => {
       dispatch(setUser(user));
       navigate("/");
     } catch (err) {
-      setError("Invalid CPF or Password.");
+      setError(t("auth.loginError"));
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="max-w-md w-full space-y-8">
         <div className="bg-white rounded-lg shadow-lg px-8 py-10">
           <div className="flex flex-col items-center justify-center mb-8">
@@ -81,7 +86,7 @@ const Login = () => {
                 htmlFor="cpf"
                 className="block text-sm font-medium text-gray-700"
               >
-                CPF
+                {t("auth.cpf")}
               </label>
               <input
                 type="text"
@@ -94,7 +99,7 @@ const Login = () => {
                     ? "border-red-300 bg-red-50"
                     : "border-gray-300 bg-white"
                 }`}
-                placeholder="000.000.000-00"
+                placeholder={t("auth.cpfPlaceholder")}
               />
               {validationErrors.cpf && (
                 <p className="text-red-600 text-xs mt-1 font-medium">
@@ -108,7 +113,7 @@ const Login = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Password
+                {t("auth.password")}
               </label>
               <input
                 type="password"
@@ -121,7 +126,7 @@ const Login = () => {
                     ? "border-red-300 bg-red-50"
                     : "border-gray-300 bg-white"
                 }`}
-                placeholder="Enter your password"
+                placeholder={t("auth.passwordPlaceholder")}
               />
               {validationErrors.password && (
                 <p className="text-red-600 text-xs mt-1 font-medium">
@@ -134,7 +139,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
             >
-              Sign In
+              {t("auth.loginButton")}
             </button>
           </form>
         </div>

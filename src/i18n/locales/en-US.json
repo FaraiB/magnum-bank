@@ -1,0 +1,152 @@
+{
+  "nav": {
+    "home": "Home",
+    "transactions": "Transactions",
+    "history": "History",
+    "logout": "Logout"
+  },
+  "auth": {
+    "cpf": "CPF",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "loginError": "Invalid CPF or password.",
+    "cpfPlaceholder": "000.000.000-00",
+    "passwordPlaceholder": "Enter your password",
+    "passwordError": "Password must be at least 6 characters.",
+    "cpfError": "CPF must be 11 digits."
+  },
+  "home": {
+    "welcome": "Welcome, {{name}}",
+    "subtitle": "Manage your finances with confidence",
+    "currentBalance": "Current Balance",
+    "newTransaction": "New Transaction",
+    "transactionHistory": "Transaction History",
+    "latestTransactions": "Latest Transactions",
+    "noRecentTransactions": "No recent transactions."
+  },
+  "transactions": {
+    "title": "New Transaction",
+    "subtitle": "Send money securely",
+    "type": "Transaction Type",
+    "pix": "PIX",
+    "ted": "TED",
+    "amount": "Amount",
+    "amountPlaceholder": "0.00",
+    "recipient": "Recipient",
+    "recipientPlaceholder": "Recipient name or CPF",
+    "description": "Description",
+    "descriptionPlaceholder": "Transaction description (optional)",
+    "submit": "Send",
+    "cancel": "Cancel",
+    "pixDescription": "Instant transfer 24/7",
+    "tedDescription": "Bank-to-bank transfer",
+    "validation": {
+      "amountRequired": "Amount is required",
+      "amountMinimum": "Minimum amount is R$ 0.01",
+      "recipientRequired": "Recipient is required",
+      "insufficientFunds": "Insufficient funds"
+    }
+  },
+  "history": {
+    "title": "Transaction History",
+    "subtitle": "View all your transactions",
+    "filters": "Filters",
+    "dateRange": "Date Range",
+    "type": "Type",
+    "allTypes": "All types",
+    "status": "Status",
+    "allStatus": "All status",
+    "apply": "Apply",
+    "clear": "Clear",
+    "noTransactions": "No transactions found",
+    "loadMore": "Load more",
+    "sortBy": "Sort by",
+    "date": "Date",
+    "amount": "Amount",
+    "columns": {
+      "date": "Date",
+      "type": "Type",
+      "recipient": "Recipient",
+      "amount": "Amount",
+      "status": "Status",
+      "description": "Description"
+    },
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "modals": {
+    "password": {
+      "title": "Confirm Transaction",
+      "subtitle": "Enter your password to confirm",
+      "passwordLabel": "Password",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "error": "Incorrect password"
+    },
+    "summary": {
+      "title": "Transaction Summary",
+      "type": "Type",
+      "recipient": "Recipient",
+      "amount": "Amount",
+      "description": "Description",
+      "date": "Date",
+      "confirm": "Confirm Transaction",
+      "cancel": "Cancel",
+      "processing": "Processing..."
+    },
+    "success": {
+      "title": "Transaction Completed",
+      "message": "Your transaction was processed successfully",
+      "viewHistory": "View History",
+      "newTransaction": "New Transaction"
+    },
+    "error": {
+      "title": "Transaction Error",
+      "message": "An error occurred while processing your transaction",
+      "tryAgain": "Try Again",
+      "close": "Close"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "currency": "R$",
+    "noData": "No data available",
+    "selectOption": "Select an option"
+  },
+  "balance": {
+    "current": "Current Balance",
+    "available": "Available Balance",
+    "blocked": "Blocked Balance",
+    "updated": "Updated at"
+  },
+  "notifications": {
+    "transactionSuccess": "Transaction completed successfully",
+    "transactionError": "Error processing transaction",
+    "loginSuccess": "Login successful",
+    "logoutSuccess": "Logout successful",
+    "updateSuccess": "Information updated successfully"
+  },
+  "errors": {
+    "networkError": "Connection error. Check your internet.",
+    "serverError": "Server error. Try again later.",
+    "validationError": "Please check the entered data.",
+    "authError": "Authentication error. Please login again.",
+    "notFound": "Page not found"
+  }
+}
