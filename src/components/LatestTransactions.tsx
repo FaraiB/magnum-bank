@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React, { memo } from "react";
 
 type Transaction = {
@@ -17,7 +18,7 @@ const LatestTransactions: React.FC<LatestTransactionsProps> = ({
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <h3 className="text-lg font-medium text-gray-900 mb-4">
-        Latest Transactions
+        {t("home.latestTransactions")}
       </h3>
       {transactions.length > 0 ? (
         <div className="space-y-3">
@@ -42,7 +43,9 @@ const LatestTransactions: React.FC<LatestTransactionsProps> = ({
         </div>
       ) : (
         <div className="text-center py-8">
-          <p className="text-gray-500 text-sm">No recent transactions.</p>
+          <p className="text-gray-500 text-sm">
+            {t("home.noRecentTransactions")}
+          </p>
         </div>
       )}
     </div>

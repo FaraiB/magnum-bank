@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import Home from "../Home";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice, { type Transaction } from "../../redux/userSlice";
+import { t } from "i18next";
 
 // Mock useNavigate
 const mockNavigate = vi.fn();
@@ -27,7 +28,6 @@ const mockLocalStorage = {
 Object.defineProperty(window, "localStorage", { value: mockLocalStorage });
 
 describe("Home Component", () => {
-  // Complete mock user data matching your UserState interface
   const mockTransactions: Transaction[] = [
     {
       id: "1",
@@ -70,7 +70,6 @@ describe("Home Component", () => {
     transactions: mockTransactions,
   };
 
-  // Helper to create store with specific user state
   const createStoreWithUserState = (userState: any) => {
     const store = configureStore({
       reducer: {
@@ -78,7 +77,6 @@ describe("Home Component", () => {
       },
     });
 
-    // If we have user data, dispatch it to the store
     if (userState) {
       store.dispatch({ type: "user/setUser", payload: userState });
     }
@@ -98,27 +96,31 @@ describe("Home Component", () => {
     expect(
       screen.getByRole("img", { name: /magnum bank/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "nav.home" })).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /transactions/i })
+      screen.getByRole("link", { name: "nav.transactions" })
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /history/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /logout/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "nav.history" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "nav.logout" })
+    ).toBeInTheDocument();
 
-    // Check user welcome message
-    expect(screen.getByText(`Welcome, ${mockUser.name}`)).toBeInTheDocument();
+    expect(
+      screen.getByText(t("home.welcome", { name: mockUser.name }))
+    ).toBeInTheDocument();
 
-    // Check balance display
     expect(
       screen.getByText(`R$ ${mockUser.balance.toFixed(2)}`)
     ).toBeInTheDocument();
 
     // Check action buttons (still in Home component)
     expect(
-      screen.getByRole("button", { name: /new transaction/i })
+      screen.getByRole("button", { name: "home.newTransaction" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /transaction history/i })
+      screen.getByRole("button", { name: "home.transactionHistory" })
     ).toBeInTheDocument();
   });
 
@@ -127,24 +129,21 @@ describe("Home Component", () => {
     const store = createStoreWithUserState(mockUser);
     renderWithProviders(<Home />, { store });
 
-    // Test navigation to transactions (from Home action button)
-    await user.click(screen.getByRole("button", { name: /new transaction/i }));
+    await user.click(
+      screen.getByRole("button", { name: "home.newTransaction" })
+    );
     expect(mockNavigate).toHaveBeenCalledWith("/transactions");
 
-    // Test navigation to history (from Home action button)
     await user.click(
-      screen.getByRole("button", { name: /transaction history/i })
+      screen.getByRole("button", { name: "home.transactionHistory" })
     );
     expect(mockNavigate).toHaveBeenCalledWith("/history");
 
-    // Test logout functionality (from Layout component)
-    await user.click(screen.getByRole("button", { name: /logout/i }));
+    await user.click(screen.getByRole("button", { name: "nav.logout" }));
 
-    // Check localStorage was cleared
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("user_id");
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("auth_token");
 
-    // Check Redux state was cleared (user should be cleared from store)
     const state = store.getState();
     expect(state.user.id).toBeNull();
     expect(state.user.name).toBeNull();
@@ -153,15 +152,12 @@ describe("Home Component", () => {
   });
 
   it("should redirect to login when user is not authenticated", () => {
-    // Test with completely null user
     const store = createStoreWithUserState(null);
     renderWithProviders(<Home />, { store });
     expect(mockNavigate).toHaveBeenCalledWith("/login");
 
-    // Clear mocks for next test
     vi.clearAllMocks();
 
-    // Test with user object but null id (partially logged out state)
     const partialUser = {
       id: null,
       name: null,
@@ -181,15 +177,15 @@ describe("Home Component", () => {
     const store = createStoreWithUserState(userWithNoTransactions);
     renderWithProviders(<Home />, { store });
 
-    // Should still render main elements
-    expect(screen.getByText(`Welcome, ${mockUser.name}`)).toBeInTheDocument();
+    expect(
+      screen.getByText(t("home.welcome", { name: mockUser.name }))
+    ).toBeInTheDocument();
     expect(
       screen.getByText(`R$ ${mockUser.balance.toFixed(2)}`)
     ).toBeInTheDocument();
 
-    // Should not crash when trying to display latest transactions
     expect(
-      screen.getByRole("button", { name: /new transaction/i })
+      screen.getByRole("button", { name: "home.newTransaction" })
     ).toBeInTheDocument();
   });
 });

@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React, { memo } from "react";
 
 type BalanceCardProps = {
@@ -9,7 +10,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <div className="text-center">
         <h3 className="text-lg font-medium text-gray-700 mb-3">
-          Current Balance
+          {t("home.currentBalance")}
         </h3>
         <p className="text-4xl font-bold text-gray-900">
           R$ {balance.toFixed(2)}
