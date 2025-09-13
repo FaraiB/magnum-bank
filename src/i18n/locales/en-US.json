@@ -59,34 +59,33 @@
   },
   "history": {
     "title": "Transaction History",
-    "subtitle": "View all your transactions",
-    "filters": "Filters",
+    "subtitle": "Review and filter your transaction history",
+    "filterTransactions": "Filter Transactions",
+    "filters": "Quick Filters:",
+    "last7": "Last 7 days",
+    "last15": "Last 15 days",
+    "last30": "Last 30 days",
+    "last90": "Last 90 days",
     "dateRange": "Date Range",
-    "type": "Type",
+    "start": "Start Date:",
+    "end": "End Date:",
+    "type": "Type:",
     "allTypes": "All types",
     "transactionStatus": "Status",
+    "transactions": "Transactions",
     "allStatus": "All status",
     "apply": "Apply",
     "clear": "Clear",
     "noTransactions": "No transactions found",
     "loadMore": "Load more",
-    "sortBy": "Sort by",
-    "date": "Date",
+    "sortBy": "Sort by Date:",
+    "reset": "Reset Filter",
     "amount": "Amount",
-    "columns": {
-      "date": "Date",
-      "type": "Type",
-      "recipient": "Recipient",
-      "amount": "Amount",
-      "status": "Status",
-      "description": "Description"
-    },
-    "status": {
-      "completed": "Completed",
-      "pending": "Pending",
-      "failed": "Failed",
-      "cancelled": "Cancelled"
-    }
+    "min": "Min Amount (R$):",
+    "max": "Max Amount (R$):",
+    "balance": "Balance After:",
+    "newest": "Newest First",
+    "oldest": "Oldest First"
   },
   "modals": {
     "password": {

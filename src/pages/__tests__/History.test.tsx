@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import History from "../History";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice, { type Transaction } from "../../redux/userSlice";
+import { t } from "i18next";
 
 // Mock React Router
 vi.mock("react-router-dom", async () => {
@@ -81,25 +82,25 @@ describe("History Component", () => {
     renderWithProviders(<History />, { store });
 
     // Check page title
-    expect(screen.getByText("Transaction History")).toBeInTheDocument();
+    expect(screen.getByText(t("history.title"))).toBeInTheDocument();
 
     // Check filter controls are present
-    expect(screen.getByLabelText(/type:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/start date:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/end date:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/min amount \(R\$\):/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/max amount \(R\$\):/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/sort by date:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.type"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.start"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.end"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.min"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.max"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.sortBy"))).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /reset filters/i })
+      screen.getByRole("button", { name: t("history.reset") })
     ).toBeInTheDocument();
 
     // Check period filter buttons
     expect(
-      screen.getByRole("button", { name: /last 7 days/i })
+      screen.getByRole("button", { name: t("history.last7") })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /last 30 days/i })
+      screen.getByRole("button", { name: t("history.last30") })
     ).toBeInTheDocument();
 
     // Check transactions are displayed (should show all 3)
@@ -122,7 +123,7 @@ describe("History Component", () => {
     expect(screen.getByText("Ana Costa")).toBeInTheDocument();
 
     // Filter by PIX type
-    await user.selectOptions(screen.getByLabelText(/type:/i), "PIX");
+    await user.selectOptions(screen.getByLabelText(t("history.type")), "PIX");
 
     // Only PIX transactions should be visible (Maria Santos and Ana Costa)
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();
@@ -130,7 +131,7 @@ describe("History Component", () => {
     expect(screen.queryByText("José Silva")).not.toBeInTheDocument();
 
     // Filter by TED type
-    await user.selectOptions(screen.getByLabelText(/type:/i), "TED");
+    await user.selectOptions(screen.getByLabelText(t("history.type")), "TED");
 
     // Only TED transaction should be visible (José Silva)
     expect(screen.getByText("José Silva")).toBeInTheDocument();
@@ -138,7 +139,7 @@ describe("History Component", () => {
     expect(screen.queryByText("Ana Costa")).not.toBeInTheDocument();
 
     // Reset filters
-    await user.click(screen.getByRole("button", { name: /reset filters/i }));
+    await user.click(screen.getByRole("button", { name: t("history.reset") }));
 
     // All transactions should be visible again
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();
@@ -150,13 +151,13 @@ describe("History Component", () => {
     const emptyStore = createStoreWithTransactions([]);
     renderWithProviders(<History />, { store: emptyStore });
 
-    expect(screen.getByText("Transaction History")).toBeInTheDocument();
-    expect(screen.getByText("No transactions found.")).toBeInTheDocument();
+    expect(screen.getByText(t("history.title"))).toBeInTheDocument();
+    expect(screen.getByText(t("history.noTransactions"))).toBeInTheDocument();
 
     // Should still show filter controls
-    expect(screen.getByLabelText(/type:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(t("history.type"))).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /reset filters/i })
+      screen.getByRole("button", { name: t("history.reset") })
     ).toBeInTheDocument();
   });
 
@@ -166,20 +167,20 @@ describe("History Component", () => {
     renderWithProviders(<History />, { store });
 
     // Test period filter button
-    await user.click(screen.getByRole("button", { name: /last 7 days/i }));
+    await user.click(screen.getByRole("button", { name: t("history.last7") }));
 
     // The date inputs should have values after clicking period filter
     const startDateInput = screen.getByLabelText(
-      /start date:/i
+      t("history.start")
     ) as HTMLInputElement;
     const endDateInput = screen.getByLabelText(
-      /end date:/i
+      t("history.end")
     ) as HTMLInputElement;
     expect(startDateInput.value).not.toBe("");
     expect(endDateInput.value).not.toBe("");
 
     // Should still show transactions
-    expect(screen.getByText("Transaction History")).toBeInTheDocument();
+    expect(screen.getByText(t("history.title"))).toBeInTheDocument();
   });
 
   it("should handle sort order changes", async () => {
@@ -188,13 +189,13 @@ describe("History Component", () => {
     renderWithProviders(<History />, { store });
 
     // Default should be "Newest First"
-    expect(screen.getByDisplayValue("Newest First")).toBeInTheDocument();
+    expect(screen.getByDisplayValue(t("history.newest"))).toBeInTheDocument();
 
     // Change to oldest first
-    await user.selectOptions(screen.getByLabelText(/sort by date:/i), "asc");
+    await user.selectOptions(screen.getByLabelText(t("history.sortBy")), "asc");
 
     // Should update to "Oldest First"
-    expect(screen.getByDisplayValue("Oldest First")).toBeInTheDocument();
+    expect(screen.getByDisplayValue(t("history.oldest"))).toBeInTheDocument();
 
     // Transactions should still be displayed
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();

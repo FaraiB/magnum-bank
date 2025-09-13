@@ -26,7 +26,6 @@
   },
   "transactions": {
     "title": "transactions.title",
-    "subtitle": "transactions.subtitle",
     "type": "transactions.type",
     "newTransaction": "transactions.newTransaction",
     "pix": "transactions.pix",
@@ -61,33 +60,32 @@
   "history": {
     "title": "history.title",
     "subtitle": "history.subtitle",
+    "filterTransactions": "history.filterTransactions",
     "filters": "history.filters",
+    "last7": "history.last7",
+    "last15": "history.last15",
+    "last30": "history.last30",
+    "last90": "history.last90",
     "dateRange": "history.dateRange",
+    "start": "history.start",
+    "end": "history.end",
     "type": "history.type",
     "allTypes": "history.allTypes",
     "transactionStatus": "history.transactionStatus",
+    "transactions": "history.transactions",
     "allStatus": "history.allStatus",
     "apply": "history.apply",
     "clear": "history.clear",
     "noTransactions": "history.noTransactions",
     "loadMore": "history.loadMore",
     "sortBy": "history.sortBy",
-    "date": "history.date",
+    "reset": "history.reset",
     "amount": "history.amount",
-    "columns": {
-      "date": "history.columns.date",
-      "type": "history.columns.type",
-      "recipient": "history.columns.recipient",
-      "amount": "history.columns.amount",
-      "status": "history.columns.status",
-      "description": "history.columns.description"
-    },
-    "status": {
-      "completed": "history.status.completed",
-      "pending": "history.status.pending",
-      "failed": "history.status.failed",
-      "cancelled": "history.status.cancelled"
-    }
+    "min": "history.min",
+    "max": "history.max",
+    "balance": "history.balance",
+    "newest": "history.newest",
+    "oldest": "history.oldest"
   },
   "modals": {
     "password": {

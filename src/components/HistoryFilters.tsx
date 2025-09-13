@@ -1,4 +1,5 @@
 import React from "react";
+import { t } from "i18next";
 
 // Define the props for this component
 type HistoryFiltersProps = {
@@ -37,7 +38,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <h3 className="text-lg font-medium text-gray-900 mb-6">
-        Filter Transactions
+        {t("history.filterTransactions")}
       </h3>
 
       <div className="space-y-6">
@@ -47,7 +48,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
             htmlFor="filterType"
             className="block text-sm font-medium text-gray-700 mb-1 sm:mb-0 sm:w-24"
           >
-            Type:
+            {t("history.type")}
           </label>
           <select
             id="filterType"
@@ -55,7 +56,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
             onChange={(e) => setFilterType(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors bg-white"
           >
-            <option value="all">All Types</option>
+            <option value="all">{t("history.allTypes")}</option>
             <option value="PIX">PIX</option>
             <option value="TED">TED</option>
           </select>
@@ -64,32 +65,32 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
         {/* Quick Period Filters */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
-            Quick Filters:
+            {t("history.filters")}
           </label>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handlePeriodFilter(7)}
               className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
-              Last 7 days
+              {t("history.last7")}
             </button>
             <button
               onClick={() => handlePeriodFilter(15)}
               className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
-              Last 15 days
+              {t("history.last15")}
             </button>
             <button
               onClick={() => handlePeriodFilter(30)}
               className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
-              Last 30 days
+              {t("history.last30")}
             </button>
             <button
               onClick={() => handlePeriodFilter(90)}
               className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
-              Last 90 days
+              {t("history.last90")}
             </button>
           </div>
         </div>
@@ -101,7 +102,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               htmlFor="startDate"
               className="block text-sm font-medium text-gray-700"
             >
-              Start Date:
+              {t("history.start")}
             </label>
             <input
               type="date"
@@ -116,7 +117,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               htmlFor="endDate"
               className="block text-sm font-medium text-gray-700"
             >
-              End Date:
+              {t("history.end")}
             </label>
             <input
               type="date"
@@ -135,7 +136,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               htmlFor="minAmount"
               className="block text-sm font-medium text-gray-700"
             >
-              Min Amount (R$):
+              {t("history.min")}
             </label>
             <input
               type="number"
@@ -151,7 +152,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               htmlFor="maxAmount"
               className="block text-sm font-medium text-gray-700"
             >
-              Max Amount (R$):
+              {t("history.max")}
             </label>
             <input
               type="number"
@@ -171,7 +172,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               htmlFor="sortOrder"
               className="block text-sm font-medium text-gray-700"
             >
-              Sort by Date:
+              {t("history.sortBy")}
             </label>
             <select
               id="sortOrder"
@@ -179,8 +180,8 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
               onChange={(e) => setSortOrder(e.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors bg-white"
             >
-              <option value="desc">Newest First</option>
-              <option value="asc">Oldest First</option>
+              <option value="desc">{t("history.newest")}</option>
+              <option value="asc">{t("history.oldest")}</option>
             </select>
           </div>
 
@@ -188,7 +189,7 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
             onClick={handleResetFilters}
             className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
-            Reset Filters
+            {t("history.reset")}
           </button>
         </div>
       </div>

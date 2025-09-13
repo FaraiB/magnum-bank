@@ -1,5 +1,6 @@
 import React from "react";
 import { type Transaction } from "../redux/userSlice";
+import { t } from "i18next";
 
 type TransactionListProps = {
   transactions: Transaction[];
@@ -12,7 +13,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
         <div className="divide-y divide-gray-200">
           <div className="px-6 py-4 bg-gray-50 rounded-t-lg">
             <h3 className="text-lg font-medium text-gray-900">
-              Transactions ({transactions.length})
+              {t("history.transactions")} ({transactions.length})
             </h3>
           </div>
           <div className="divide-y divide-gray-100">
@@ -33,20 +34,24 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
 
                   <div className="grid grid-cols-3 gap-4 text-sm text-gray-600">
                     <div className="flex flex-col">
-                      <span className="font-medium text-gray-700">Type:</span>
+                      <span className="font-medium text-gray-700">
+                        {t("history.type")}
+                      </span>
                       <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 w-fit mt-1">
                         {transaction.type}
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-medium text-gray-700">Date:</span>
+                      <span className="font-medium text-gray-700">
+                        {t("history.date")}
+                      </span>
                       <span className="mt-1">
                         {new Date(transaction.date).toLocaleDateString()}
                       </span>
                     </div>
                     <div className="flex flex-col">
                       <span className="font-medium text-gray-700">
-                        Balance After:
+                        {t("history.balance")}
                       </span>
                       <span className="mt-1 font-medium">
                         R$ {transaction.balanceAfter.toFixed(2)}
@@ -76,7 +81,7 @@ const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
             </svg>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">
-            No transactions found.
+            {t("history.noTransactions")}
           </h3>
         </div>
       )}
