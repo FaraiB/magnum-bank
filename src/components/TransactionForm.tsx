@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React, { useState, memo } from "react";
 
 export type TransactionFormData = {
@@ -74,7 +75,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
     return (
       <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
         <h3 className="text-lg font-medium text-gray-900 mb-6">
-          Transaction Details
+          {t("transactions.title")}
         </h3>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -89,7 +90,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               htmlFor="recipientName"
               className="block text-sm font-medium text-gray-700"
             >
-              Recipient Name
+              {t("transactions.recipient")}
             </label>
             <input
               type="text"
@@ -98,7 +99,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               onChange={(e) => setRecipientName(e.target.value)}
               required
               className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors"
-              placeholder="Enter recipient's full name"
+              placeholder={t("transactions.recipientNamePlaceholder")}
             />
           </div>
 
@@ -107,7 +108,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               htmlFor="recipientCpf"
               className="block text-sm font-medium text-gray-700"
             >
-              Recipient CPF/CNPJ
+              {t("transactions.recipientCPF")}
             </label>
             <input
               type="text"
@@ -125,7 +126,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               htmlFor="amount"
               className="block text-sm font-medium text-gray-700"
             >
-              Amount (R$)
+              {t("transactions.amount")} (R$)
             </label>
             <input
               type="text"
@@ -143,7 +144,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               htmlFor="transactionType"
               className="block text-sm font-medium text-gray-700"
             >
-              Transaction Type
+              {t("transactions.type")}
             </label>
             <select
               id="transactionType"
@@ -151,8 +152,8 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               onChange={(e) => setTransactionType(e.target.value)}
               className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors bg-white"
             >
-              <option value="PIX">PIX</option>
-              <option value="TED">TED</option>
+              <option value="PIX"> {t("transactions.pix")} </option>
+              <option value="TED"> {t("transactions.ted")} </option>
             </select>
           </div>
 
@@ -161,7 +162,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
               htmlFor="transactionDate"
               className="block text-sm font-medium text-gray-700"
             >
-              Date
+              {t("transactions.date")}
             </label>
             <input
               type="date"
@@ -180,7 +181,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                 htmlFor="pixKey"
                 className="block text-sm font-medium text-gray-700"
               >
-                PIX Key
+                {t("transactions.pixKey")}
               </label>
               <input
                 type="text"
@@ -189,7 +190,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                 onChange={(e) => setPixKey(e.target.value)}
                 required
                 className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors bg-white"
-                placeholder="Email, phone, CPF, or random key"
+                placeholder={t("transactions.pixKeyPlaceholder")}
               />
             </div>
           )}
@@ -197,7 +198,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
           {transactionType === "TED" && (
             <div className="space-y-4 p-4 bg-gray-50 rounded-md border border-gray-200">
               <h4 className="text-sm font-medium text-gray-900 mb-3">
-                Bank Details
+                {t("transactions.bankDetails")}
               </h4>
 
               <div className="space-y-1">
@@ -205,7 +206,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                   htmlFor="bank"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Bank
+                  {t("transactions.bank")}
                 </label>
                 <input
                   type="text"
@@ -214,7 +215,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                   onChange={(e) => setBank(e.target.value)}
                   required
                   className="w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors bg-white"
-                  placeholder="Bank name or code"
+                  placeholder={t("transactions.bankPlaceholder")}
                 />
               </div>
 
@@ -224,7 +225,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                     htmlFor="branch"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Branch
+                    {t("transactions.branch")}
                   </label>
                   <input
                     type="text"
@@ -242,7 +243,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
                     htmlFor="account"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Account
+                    {t("transactions.account")}
                   </label>
                   <input
                     type="text"
@@ -262,7 +263,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
             type="submit"
             className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm"
           >
-            Transfer
+            {t("transactions.transfer")}
           </button>
         </form>
       </div>

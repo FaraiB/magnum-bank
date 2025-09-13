@@ -28,12 +28,23 @@
     "title": "Nova Transação",
     "subtitle": "Envie dinheiro com segurança",
     "type": "Tipo de Transação",
+    "newTransaction": "Nova Transação",
     "pix": "PIX",
     "ted": "TED",
+    "pixKey": "Chave PIX",
+    "pixKeyPlaceholder": "Email, telefone, CPF ou chave aleatória",
     "amount": "Valor",
     "amountPlaceholder": "0,00",
+    "date": "Data",
+    "bankDetails": "Detalhes Bancários",
+    "bank": "Banco",
+    "bankPlaceholder": "Nome ou código do banco",
+    "branch": "Agência",
+    "account": "Conta",
+    "transfer": "Transferir",
     "recipient": "Destinatário",
-    "recipientPlaceholder": "Nome ou CPF do destinatário",
+    "recipientCPF": "CPF/CNPJ do Destinatário",
+    "recipientNamePlaceholder": "Digite o nome completo do destinatário",
     "description": "Descrição",
     "descriptionPlaceholder": "Descrição da transação (opcional)",
     "submit": "Enviar",
@@ -54,7 +65,7 @@
     "dateRange": "Período",
     "type": "Tipo",
     "allTypes": "Todos os tipos",
-    "status": "Status",
+    "transactionStatus": "Status da Transação",
     "allStatus": "Todos os status",
     "apply": "Aplicar",
     "clear": "Limpar",
@@ -92,11 +103,9 @@
       "type": "Tipo",
       "recipient": "Destinatário",
       "amount": "Valor",
-      "description": "Descrição",
       "date": "Data",
-      "confirm": "Confirmar Transação",
-      "cancel": "Cancelar",
-      "processing": "Processando..."
+      "close": "Fechar",
+      "balance": "Saldo após:"
     },
     "success": {
       "title": "Transação Realizada",
@@ -136,17 +145,17 @@
     "updated": "Atualizado em"
   },
   "notifications": {
-    "transactionSuccess": "Transação realizada com sucesso",
-    "transactionError": "Erro ao processar transação",
-    "loginSuccess": "Login realizado com sucesso",
-    "logoutSuccess": "Logout realizado com sucesso",
-    "updateSuccess": "Informações atualizadas com sucesso"
+    "transactionSuccess": "Transação concluída com sucesso",
+    "transactionError": "Transação falhou. Por favor, tente novamente",
+    "loginSuccess": "Login bem-sucedido",
+    "logoutSuccess": "Logout bem-sucedido",
+    "updateSuccess": "Informação atualizada com sucesso"
   },
   "errors": {
     "networkError": "Erro de conexão. Verifique sua internet.",
     "serverError": "Erro no servidor. Tente novamente mais tarde.",
-    "validationError": "Verifique os dados informados.",
-    "authError": "Erro de autenticação. Faça login novamente.",
+    "validationError": "Por favor, verifique os dados informados.",
+    "authError": "Erro de autenticação. Por favor, faça login novamente.",
     "notFound": "Página não encontrada"
   }
 }

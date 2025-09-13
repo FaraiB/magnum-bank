@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import React, { useState, memo } from "react";
 
 type PasswordModalProps = {
@@ -18,7 +19,7 @@ const PasswordModal: React.FC<PasswordModalProps> = memo(
         setPassword("");
         setError("");
       } else {
-        setError("Invalid transaction password.");
+        setError(t("modals.password.error"));
         setPassword("");
       }
     };
@@ -47,10 +48,10 @@ const PasswordModal: React.FC<PasswordModalProps> = memo(
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900">
-              Enter Transaction Password
+              {t("modals.password.title")}
             </h3>
             <p className="text-sm text-gray-600 mt-1">
-              Please enter your password to confirm this transaction
+              {t("modals.password.subtitle")}
             </p>
           </div>
 
@@ -79,13 +80,13 @@ const PasswordModal: React.FC<PasswordModalProps> = memo(
                 onClick={onClose}
                 className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               >
-                Cancel
+                {t("modals.password.cancel")}
               </button>
               <button
                 type="submit"
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
               >
-                Confirm
+                {t("modals.password.confirm")}
               </button>
             </div>
           </form>

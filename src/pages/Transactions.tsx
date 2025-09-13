@@ -13,6 +13,7 @@ import BalanceCard from "../components/BalanceCard";
 import TransactionForm, {
   type TransactionFormData,
 } from "../components/TransactionForm";
+import { t } from "i18next";
 
 const Transactions = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -30,7 +31,7 @@ const Transactions = () => {
     setError("");
 
     if (data.amount > user.balance) {
-      setError("Insufficient funds.");
+      setError(t("transactions.validation.insufficientFunds"));
       return;
     }
 
@@ -61,13 +62,13 @@ const Transactions = () => {
     try {
       dispatch(addTransaction(transactionSummary));
       dispatch(setBalance(transactionSummary.balanceAfter));
-      setSuccess("Transaction successful!");
+      setSuccess(t("notifications.transactionSuccess"));
       setIsPasswordModalOpen(false);
       setIsSummaryModalOpen(true);
       setFormKey((prevKey) => prevKey + 1);
       setError(""); // Clear any previous error message
     } catch (err) {
-      setError("Transaction failed. Please try again");
+      setError(t("notifications.transactionError"));
       setIsPasswordModalOpen(false);
     }
   };
@@ -76,7 +77,9 @@ const Transactions = () => {
     <Layout>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">New Transaction</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            {t("transactions.newTransaction")}
+          </h1>
         </div>
 
         <div className="space-y-8">

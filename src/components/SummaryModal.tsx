@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { type Transaction } from "../redux/userSlice";
+import { t } from "i18next";
 
 type SummaryModalProps = {
   isOpen: boolean;
@@ -34,7 +35,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900">
-              Transaction Summary
+              {t("modals.summary.title")}
             </h3>
             <p className="text-sm text-green-600 font-medium mt-1">{status}</p>
           </div>
@@ -43,7 +44,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
             <div className="bg-gray-50 rounded-md p-4 space-y-3">
               <div className="flex justify-between">
                 <span className="text-sm font-medium text-gray-700">
-                  Recipient:
+                  {t("modals.summary.recipient")}
                 </span>
                 <span className="text-sm text-gray-900">
                   {transaction.recipientName}
@@ -51,14 +52,18 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
               </div>
 
               <div className="flex justify-between">
-                <span className="text-sm font-medium text-gray-700">Type:</span>
+                <span className="text-sm font-medium text-gray-700">
+                  {t("modals.summary.type")}
+                </span>
                 <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   {transaction.type}
                 </span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-sm font-medium text-gray-700">Date:</span>
+                <span className="text-sm font-medium text-gray-700">
+                  {t("modals.summary.date")}
+                </span>
                 <span className="text-sm text-gray-900">
                   {new Date(transaction.date).toLocaleDateString()}
                 </span>
@@ -66,7 +71,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
 
               <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                 <span className="text-sm font-medium text-gray-700">
-                  Amount:
+                  {t("modals.summary.amount")}
                 </span>
                 <span className="text-lg font-bold text-red-600">
                   R$ {Math.abs(transaction.value).toFixed(2)}
@@ -75,7 +80,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
 
               <div className="flex justify-between">
                 <span className="text-sm font-medium text-gray-700">
-                  Balance After:
+                  {t("modals.summary.balance")}
                 </span>
                 <span className="text-sm font-medium text-gray-900">
                   R$ {transaction.balanceAfter.toFixed(2)}
@@ -88,7 +93,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
             onClick={onClose}
             className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
-            Close
+            {t("modals.summary.close")}
           </button>
         </div>
       </div>

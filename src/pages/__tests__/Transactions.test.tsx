@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import Transactions from "../Transactions";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice, { type Transaction } from "../../redux/userSlice";
+import { t } from "i18next";
 
 // Mock useNavigate
 const mockNavigate = vi.fn();
@@ -50,31 +51,39 @@ describe("Transactions Component", () => {
 
     // Check page navigation
     expect(
-      screen.getByRole("heading", { name: /new transaction/i })
+      screen.getByRole("heading", { name: t("transactions.newTransaction") })
     ).toBeInTheDocument();
 
     // Check balance display
     expect(screen.getByText("R$ 1500.75")).toBeInTheDocument();
 
     // Check form fields are present
-    expect(screen.getByLabelText(/recipient name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/recipient cpf\/cnpj/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/amount \(r\$\)/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/transaction type/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/date/i)).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /transfer/i })
+      screen.getByLabelText(t("transactions.recipient"))
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(t("transactions.recipientCPF"))
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/transactions\.amount \(R\$\)/i)
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.type"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.date"))).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: t("transactions.transfer") })
     ).toBeInTheDocument();
 
     // Check default transaction type is PIX
-    expect(screen.getByDisplayValue("PIX")).toBeInTheDocument();
-    expect(screen.getByLabelText(/pix key/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(t("transactions.pix"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.pixKey"))).toBeInTheDocument();
 
     // Check modals are not visible initially
     expect(
-      screen.queryByText(/enter transaction password/i)
+      screen.queryByText(t("modals.password.title"))
     ).not.toBeInTheDocument();
-    expect(screen.queryByText(/transaction summary/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(t("modals.summary.title"))
+    ).not.toBeInTheDocument();
   });
 
   it("should complete full PIX transaction workflow successfully", async () => {
@@ -83,36 +92,46 @@ describe("Transactions Component", () => {
     renderWithProviders(<Transactions />, { store });
 
     // Fill out the PIX transaction form
-    await user.type(screen.getByLabelText(/recipient name/i), "Maria Santos");
     await user.type(
-      screen.getByLabelText(/recipient cpf\/cnpj/i),
+      screen.getByLabelText(t("transactions.recipient")),
+      "Maria Santos"
+    );
+    await user.type(
+      screen.getByLabelText(t("transactions.recipientCPF")),
       "98765432100"
     );
     await user.type(screen.getByLabelText(/amount \(r\$\)/i), "10050"); // R$ 100.50
-    await user.type(screen.getByLabelText(/pix key/i), "maria@email.com");
+    await user.type(
+      screen.getByLabelText(t("transactions.pixKey")),
+      "maria@email.com"
+    );
 
     // Submit the form
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("transactions.transfer") })
+    );
 
     // Password modal should appear
-    expect(screen.getByText(/enter transaction password/i)).toBeInTheDocument();
+    expect(screen.getByText(t("modals.password.title"))).toBeInTheDocument();
 
     // Enter correct password
     const passwordInput = screen.getByDisplayValue("");
     await user.type(passwordInput, "1234");
-    await user.click(screen.getByRole("button", { name: /confirm/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("modals.password.confirm") })
+    );
 
     // Summary modal should appear
     await waitFor(() => {
-      expect(screen.getByText(/transaction summary/i)).toBeInTheDocument();
+      expect(screen.getByText(t("modals.summary.title"))).toBeInTheDocument();
     });
 
     // Verify summary modal content
-    expect(screen.getByText("Transaction successful!")).toBeInTheDocument();
+    expect(screen.getByText(t("modals.summary.title"))).toBeInTheDocument();
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();
     expect(screen.getByText("R$ 100.50")).toBeInTheDocument();
     const summarySection = screen
-      .getByText("Transaction Summary")
+      .getByText(t("modals.summary.title"))
       .closest(".modal");
     expect(summarySection).toHaveTextContent("PIX");
 
@@ -125,8 +144,12 @@ describe("Transactions Component", () => {
     expect(state.user.transactions[0].type).toBe("PIX");
 
     // Close summary modal
-    await user.click(screen.getByRole("button", { name: /close/i }));
-    expect(screen.queryByText(/transaction summary/i)).not.toBeInTheDocument();
+    await user.click(
+      screen.getByRole("button", { name: t("modals.summary.close") })
+    );
+    expect(
+      screen.queryByText(t("modals.summary.title"))
+    ).not.toBeInTheDocument();
   });
 
   it("should handle insufficient funds and invalid password correctly", async () => {
@@ -135,43 +158,60 @@ describe("Transactions Component", () => {
     renderWithProviders(<Transactions />, { store });
 
     // Test insufficient funds
-    await user.type(screen.getByLabelText(/recipient name/i), "Test User");
-    await user.type(screen.getByLabelText(/recipient cpf/i), "12345678901");
+    await user.type(
+      screen.getByLabelText(t("transactions.recipient")),
+      "Test User"
+    );
+    await user.type(
+      screen.getByLabelText(t("transactions.recipientCPF")),
+      "12345678901"
+    );
     await user.type(screen.getByLabelText(/amount/i), "10000");
-    await user.type(screen.getByLabelText(/pix key/i), "test@email.com");
+    await user.type(
+      screen.getByLabelText(t("transactions.pixKey")),
+      "test@email.com"
+    );
 
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("transactions.transfer") })
+    );
 
     // Should show insufficient funds error
-    expect(screen.getByText(/insufficient funds/i)).toBeInTheDocument();
     expect(
-      screen.queryByText(/enter transaction password/i)
+      screen.getByText(t("transactions.validation.insufficientFunds"))
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(t("modals.password.title"))
     ).not.toBeInTheDocument();
 
     // Clear form and test valid amount with wrong password
     await user.clear(screen.getByLabelText(/amount/i));
     await user.type(screen.getByLabelText(/amount/i), "2000"); // R$ 20.00
 
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("transactions.transfer") })
+    );
 
     // Password modal should appear
-    expect(screen.getByText(/enter transaction password/i)).toBeInTheDocument();
+    expect(screen.getByText(t("modals.password.title"))).toBeInTheDocument();
 
     // Enter wrong password
     const passwordInputWrong = screen.getByDisplayValue("");
     await user.type(passwordInputWrong, "wrong");
-    await user.click(screen.getByRole("button", { name: /confirm/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("modals.password.confirm") })
+    );
 
     // Should show password error and stay on password modal
-    expect(
-      screen.getByText(/invalid transaction password/i)
-    ).toBeInTheDocument();
-    expect(screen.getByText(/enter transaction password/i)).toBeInTheDocument();
+    expect(screen.getByText(t("modals.password.error"))).toBeInTheDocument();
+    expect(screen.getByText(t("modals.password.title"))).toBeInTheDocument();
 
     // Cancel the modal
-    await user.click(screen.getByRole("button", { name: /cancel/i }));
+    await user.click(
+      screen.getByRole("button", { name: t("modals.password.cancel") })
+    );
     expect(
-      screen.queryByText(/enter transaction password/i)
+      screen.queryByText(t("modals.password.title"))
     ).not.toBeInTheDocument();
 
     // Verify no transaction was created
@@ -186,17 +226,26 @@ describe("Transactions Component", () => {
     renderWithProviders(<Transactions />, { store });
 
     // Initially PIX should be selected with PIX key field
-    expect(screen.getByDisplayValue("PIX")).toBeInTheDocument();
-    expect(screen.getByLabelText(/pix key/i)).toBeInTheDocument();
-    expect(screen.queryByLabelText(/bank/i)).not.toBeInTheDocument();
+    expect(screen.getByDisplayValue(t("transactions.pix"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.pixKey"))).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(t("transactions.bank"))
+    ).not.toBeInTheDocument();
 
     // Switch to TED
-    await user.selectOptions(screen.getByLabelText(/transaction type/i), "TED");
+    await user.selectOptions(
+      screen.getByLabelText(t("transactions.type")),
+      "TED"
+    );
 
     // Should show TED fields and hide PIX key
-    expect(screen.getByLabelText(/bank/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/branch/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/account/i)).toBeInTheDocument();
-    expect(screen.queryByLabelText(/pix key/i)).not.toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.bank"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("transactions.branch"))).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(t("transactions.account"))
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(t("transactions.pixKey"))
+    ).not.toBeInTheDocument();
   });
 });

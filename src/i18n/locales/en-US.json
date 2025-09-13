@@ -25,15 +25,25 @@
     "noRecentTransactions": "No recent transactions."
   },
   "transactions": {
-    "title": "New Transaction",
-    "subtitle": "Send money securely",
+    "title": "Transaction Details",
     "type": "Transaction Type",
+    "newTransaction": "New Transaction",
     "pix": "PIX",
     "ted": "TED",
+    "pixKey": "PIX Key",
+    "pixKeyPlaceholder": "Email, phone, CPF, or random key",
     "amount": "Amount",
     "amountPlaceholder": "0.00",
-    "recipient": "Recipient",
-    "recipientPlaceholder": "Recipient name or CPF",
+    "date": "Date",
+    "bankDetails": "Bank Details",
+    "bank": "Bank",
+    "bankPlaceholder": "Bank name or code",
+    "branch": "Branch",
+    "account": "Account",
+    "transfer": "Transfer",
+    "recipient": "Recipient Name",
+    "recipientCPF": "Recipient CPF/CNPJ",
+    "recipientNamePlaceholder": "Enter recipient's full name",
     "description": "Description",
     "descriptionPlaceholder": "Transaction description (optional)",
     "submit": "Send",
@@ -54,7 +64,7 @@
     "dateRange": "Date Range",
     "type": "Type",
     "allTypes": "All types",
-    "status": "Status",
+    "transactionStatus": "Status",
     "allStatus": "All status",
     "apply": "Apply",
     "clear": "Clear",
@@ -80,23 +90,21 @@
   },
   "modals": {
     "password": {
-      "title": "Confirm Transaction",
-      "subtitle": "Enter your password to confirm",
+      "title": "Enter Transaction Password",
+      "subtitle": "Please enter your password to confirm this transaction",
       "passwordLabel": "Password",
       "confirm": "Confirm",
       "cancel": "Cancel",
-      "error": "Incorrect password"
+      "error": "Invalid transaction password."
     },
     "summary": {
       "title": "Transaction Summary",
-      "type": "Type",
-      "recipient": "Recipient",
-      "amount": "Amount",
-      "description": "Description",
-      "date": "Date",
-      "confirm": "Confirm Transaction",
-      "cancel": "Cancel",
-      "processing": "Processing..."
+      "type": "Type:",
+      "recipient": "Recipient:",
+      "amount": "Amount:",
+      "date": "Date:",
+      "close": "Close",
+      "balance": "Balance After:"
     },
     "success": {
       "title": "Transaction Completed",
@@ -137,7 +145,7 @@
   },
   "notifications": {
     "transactionSuccess": "Transaction completed successfully",
-    "transactionError": "Error processing transaction",
+    "transactionError": "Transaction failed. Please try again",
     "loginSuccess": "Login successful",
     "logoutSuccess": "Logout successful",
     "updateSuccess": "Information updated successfully"
