@@ -1,8 +1,7 @@
+import { renderWithProviders, screen, waitFor } from "../../../test-utils";
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { render, screen, waitFor, cleanup } from "@testing-library/react";
+import { cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice, { type Transaction } from "../../../redux/userSlice";
 import Login from "../../../pages/Login";
@@ -40,13 +39,13 @@ vi.mock("react-router-dom", async () => {
 });
 
 // Helper to render with providers
-const renderWithStore = (component: React.ReactElement, store: any) => {
-  return render(
-    <Provider store={store}>
-      <BrowserRouter>{component}</BrowserRouter>
-    </Provider>
-  );
-};
+// const renderWithStore = (component: React.ReactElement, store: any) => {
+//   return render(
+//     <Provider store={store}>
+//       <BrowserRouter>{component}</BrowserRouter>
+//     </Provider>
+//   );
+// };
 
 describe("Integration Tests - User Flows", () => {
   const mockUser = {
@@ -86,7 +85,7 @@ describe("Integration Tests - User Flows", () => {
     const store = createFreshStore();
 
     // Start at login page
-    renderWithStore(<Login />, store);
+    renderWithProviders(<Login />, { store });
 
     // Verify we're on login page
     expect(
@@ -96,7 +95,7 @@ describe("Integration Tests - User Flows", () => {
     // Fill out login form using proper selectors
     await user.type(screen.getByLabelText("CPF"), "12345678901");
     await user.type(screen.getByLabelText("Password"), "password123");
-    await user.click(screen.getByRole("button", { name: /sign in/i }));
+    await user.click(screen.getByRole("button", { name: "Login" }));
 
     // Verify API was called correctly
     expect(login).toHaveBeenCalledWith("12345678901", "password123");
@@ -121,18 +120,18 @@ describe("Integration Tests - User Flows", () => {
     });
 
     cleanup();
-    renderWithStore(<Home />, storeWithUser);
+    renderWithProviders(<Home />, { store: storeWithUser });
 
     // Verify home page displays user data
-    expect(screen.getByText(`Welcome, ${mockUser.name}`)).toBeInTheDocument();
+    expect(screen.getByText("Welcome, João Silva!")).toBeInTheDocument();
     expect(
       screen.getByText(`R$ ${mockUser.balance.toFixed(2)}`)
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /new transaction/i })
+      screen.getByRole("button", { name: "New Transaction" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /transaction history/i })
+      screen.getByRole("button", { name: "Transaction History" })
     ).toBeInTheDocument();
   });
 
@@ -147,38 +146,38 @@ describe("Integration Tests - User Flows", () => {
     });
 
     // Step 1: Home page - navigate to transactions
-    renderWithStore(<Home />, storeWithUser);
-    await user.click(screen.getByRole("button", { name: /new transaction/i }));
+    renderWithProviders(<Home />, { store: storeWithUser });
+    await user.click(screen.getByRole("button", { name: "New Transaction" }));
     expect(mockNavigate).toHaveBeenCalledWith("/transactions");
 
     // Step 2: Transactions page - create transaction
     cleanup();
-    renderWithStore(<Transactions />, storeWithUser);
+    renderWithProviders(<Transactions />, { store: storeWithUser });
 
     // Fill out transaction form
-    await user.type(screen.getByLabelText(/recipient name/i), "Maria Santos");
-    await user.type(screen.getByLabelText(/recipient cpf/i), "98765432100");
-    await user.type(screen.getByLabelText(/amount/i), "5000"); // R$ 50.00
-    await user.type(screen.getByLabelText(/pix key/i), "maria@email.com");
+    await user.type(screen.getByLabelText("Recipient"), "Maria Santos");
+    await user.type(screen.getByLabelText("Recipient CPF"), "98765432100");
+    await user.type(screen.getByLabelText(/Amount/), "5000"); // R$ 50.00
+    await user.type(screen.getByLabelText("PIX Key"), "maria@email.com");
 
     // Submit transaction
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(screen.getByRole("button", { name: "Transfer" }));
 
     // Enter password in modal
-    expect(screen.getByText(/enter transaction password/i)).toBeInTheDocument();
+    expect(screen.getByText("Enter Password")).toBeInTheDocument();
     const passwordInput = screen.getByDisplayValue("");
     await user.type(passwordInput, "1234");
-    await user.click(screen.getByRole("button", { name: /confirm/i }));
+    await user.click(screen.getByRole("button", { name: "Confirm" }));
 
     // Verify summary modal appears
     await waitFor(() => {
-      expect(screen.getByText(/transaction summary/i)).toBeInTheDocument();
+      expect(screen.getByText("Transaction Summary")).toBeInTheDocument();
     });
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();
     expect(screen.getByText("R$ 50.00")).toBeInTheDocument();
 
     // Close summary modal
-    await user.click(screen.getByRole("button", { name: /close/i }));
+    await user.click(screen.getByRole("button", { name: "Close" }));
 
     // Step 3: Verify transaction was added to store
     const finalState = storeWithUser.getState();
@@ -189,9 +188,9 @@ describe("Integration Tests - User Flows", () => {
 
     // Step 4: Navigate to history and verify transaction appears
     cleanup();
-    renderWithStore(<History />, storeWithUser);
+    renderWithProviders(<History />, { store: storeWithUser });
     expect(
-      screen.getByRole("heading", { name: /transaction history/i })
+      screen.getByRole("heading", { name: "Transaction History" })
     ).toBeInTheDocument();
     expect(screen.getByText("Maria Santos")).toBeInTheDocument();
     expect(screen.getByText("R$ 50.00")).toBeInTheDocument();
@@ -206,49 +205,45 @@ describe("Integration Tests - User Flows", () => {
       preloadedState: { user: mockUser },
     });
 
-    renderWithStore(<Transactions />, storeWithUser);
+    renderWithProviders(<Transactions />, { store: storeWithUser });
 
     // Step 1: Try transaction with insufficient funds
-    await user.type(screen.getByLabelText(/recipient name/i), "Test User");
-    await user.type(screen.getByLabelText(/recipient cpf/i), "12345678901");
-    await user.type(screen.getByLabelText(/amount/i), "150000"); // R$ 1500.00 - more than balance
-    await user.type(screen.getByLabelText(/pix key/i), "test@email.com");
+    await user.type(screen.getByLabelText("Recipient"), "Test User");
+    await user.type(screen.getByLabelText("Recipient CPF"), "12345678901");
+    await user.type(screen.getByLabelText(/Amount/), "150000"); // R$ 1500.00 - more than balance
+    await user.type(screen.getByLabelText("PIX Key"), "test@email.com");
 
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(screen.getByRole("button", { name: "Transfer" }));
 
     // Should show insufficient funds error
-    expect(screen.getByText(/insufficient funds/i)).toBeInTheDocument();
-    expect(
-      screen.queryByText(/enter transaction password/i)
-    ).not.toBeInTheDocument();
+    expect(screen.getByText("Insufficient funds")).toBeInTheDocument();
+    expect(screen.queryByText("Enter Password")).not.toBeInTheDocument();
 
     // Step 2: Fix amount and try wrong password
-    await user.clear(screen.getByLabelText(/amount/i));
-    await user.type(screen.getByLabelText(/amount/i), "5000"); // R$ 50.00 - valid amount
+    await user.clear(screen.getByLabelText(/Amount/));
+    await user.type(screen.getByLabelText(/Amount/), "5000"); // R$ 50.00 - valid amount
 
-    await user.click(screen.getByRole("button", { name: /transfer/i }));
+    await user.click(screen.getByRole("button", { name: "Transfer" }));
 
     // Password modal should appear
-    expect(screen.getByText(/enter transaction password/i)).toBeInTheDocument();
+    expect(screen.getByText("Enter Password")).toBeInTheDocument();
 
     // Enter wrong password
     const wrongPasswordInput = screen.getByDisplayValue("");
     await user.type(wrongPasswordInput, "wrong");
-    await user.click(screen.getByRole("button", { name: /confirm/i }));
+    await user.click(screen.getByRole("button", { name: "Confirm" }));
 
     // Should show password error
-    expect(
-      screen.getByText(/invalid transaction password/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText("Invalid password")).toBeInTheDocument();
 
     // Step 3: Enter correct password
     const correctPasswordInput = screen.getByDisplayValue("");
     await user.type(correctPasswordInput, "1234");
-    await user.click(screen.getByRole("button", { name: /confirm/i }));
+    await user.click(screen.getByRole("button", { name: "Confirm" }));
 
     // Should show success summary
     await waitFor(() => {
-      expect(screen.getByText(/transaction summary/i)).toBeInTheDocument();
+      expect(screen.getByText("Transaction Summary")).toBeInTheDocument();
     });
     expect(screen.getByText("Test User")).toBeInTheDocument();
     expect(screen.getByText("Transaction successful!")).toBeInTheDocument();
@@ -270,10 +265,10 @@ describe("Integration Tests - User Flows", () => {
     });
 
     // Start on home page
-    renderWithStore(<Home />, storeWithUser);
+    renderWithProviders(<Home />, { store: storeWithUser });
 
     // Click logout (from Layout component)
-    await user.click(screen.getByRole("button", { name: /logout/i }));
+    await user.click(screen.getByRole("button", { name: "Logout" }));
 
     // Verify localStorage was cleared
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("user_id");
@@ -288,7 +283,7 @@ describe("Integration Tests - User Flows", () => {
 
     // If we try to access a protected page now, should redirect to login
     cleanup();
-    renderWithStore(<Home />, storeWithUser);
+    renderWithProviders(<Home />, { store: storeWithUser });
     expect(mockNavigate).toHaveBeenCalledWith("/login");
   });
 });

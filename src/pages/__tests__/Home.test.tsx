@@ -96,15 +96,17 @@ describe("Home Component", () => {
     expect(
       screen.getByRole("img", { name: /magnum bank/i })
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "nav.home" })).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "nav.transactions" })
+      screen.getByRole("link", { name: t("nav.home") })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "nav.history" })
+      screen.getByRole("link", { name: t("nav.transactions") })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "nav.logout" })
+      screen.getByRole("link", { name: t("nav.history") })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: t("nav.logout") })
     ).toBeInTheDocument();
 
     expect(
@@ -117,10 +119,10 @@ describe("Home Component", () => {
 
     // Check action buttons (still in Home component)
     expect(
-      screen.getByRole("button", { name: "home.newTransaction" })
+      screen.getByRole("button", { name: t("home.newTransaction") })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "home.transactionHistory" })
+      screen.getByRole("button", { name: t("home.transactionHistory") })
     ).toBeInTheDocument();
   });
 
@@ -130,16 +132,16 @@ describe("Home Component", () => {
     renderWithProviders(<Home />, { store });
 
     await user.click(
-      screen.getByRole("button", { name: "home.newTransaction" })
+      screen.getByRole("button", { name: t("home.newTransaction") })
     );
     expect(mockNavigate).toHaveBeenCalledWith("/transactions");
 
     await user.click(
-      screen.getByRole("button", { name: "home.transactionHistory" })
+      screen.getByRole("button", { name: t("home.transactionHistory") })
     );
     expect(mockNavigate).toHaveBeenCalledWith("/history");
 
-    await user.click(screen.getByRole("button", { name: "nav.logout" }));
+    await user.click(screen.getByRole("button", { name: t("nav.logout") }));
 
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("user_id");
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("auth_token");
@@ -185,7 +187,7 @@ describe("Home Component", () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("button", { name: "home.newTransaction" })
+      screen.getByRole("button", { name: t("home.newTransaction") })
     ).toBeInTheDocument();
   });
 });

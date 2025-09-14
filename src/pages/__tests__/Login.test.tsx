@@ -3,6 +3,7 @@ import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import Login from "../Login";
 import * as apiService from "../../api/apiService";
+import { t } from "i18next";
 
 vi.mock("../../api/apiService");
 const mockLogin = vi.mocked(apiService.login);
@@ -16,10 +17,10 @@ describe("Login Component", () => {
     renderWithProviders(<Login />);
 
     // Assert that the login form elements are present
-    expect(screen.getByLabelText("auth.cpf")).toBeInTheDocument();
-    expect(screen.getByLabelText("auth.password")).toBeInTheDocument();
+    expect(screen.getByLabelText(t("auth.cpf"))).toBeInTheDocument();
+    expect(screen.getByLabelText(t("auth.password"))).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "auth.loginButton" })
+      screen.getByRole("button", { name: t("auth.loginButton") })
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: /Magnum Bank/i })
@@ -37,9 +38,11 @@ describe("Login Component", () => {
 
     renderWithProviders(<Login />);
 
-    await user.type(screen.getByLabelText("auth.cpf"), "12345678901");
-    await user.type(screen.getByLabelText("auth.password"), "password123");
-    await user.click(screen.getByRole("button", { name: "auth.loginButton" }));
+    await user.type(screen.getByLabelText(t("auth.cpf")), "12345678901");
+    await user.type(screen.getByLabelText(t("auth.password")), "password123");
+    await user.click(
+      screen.getByRole("button", { name: t("auth.loginButton") })
+    );
 
     expect(mockLogin).toHaveBeenCalledWith("12345678901", "password123");
   });
@@ -49,12 +52,14 @@ describe("Login Component", () => {
     mockLogin.mockRejectedValueOnce(new Error("Invalid credentials"));
 
     renderWithProviders(<Login />);
-    await user.type(screen.getByLabelText("auth.cpf"), "12345678901");
-    await user.type(screen.getByLabelText("auth.password"), "wrongpassword");
-    await user.click(screen.getByRole("button", { name: "auth.loginButton" }));
+    await user.type(screen.getByLabelText(t("auth.cpf")), "12345678901");
+    await user.type(screen.getByLabelText(t("auth.password")), "wrongpassword");
+    await user.click(
+      screen.getByRole("button", { name: t("auth.loginButton") })
+    );
 
     await waitFor(() => {
-      expect(screen.getByText("auth.loginError")).toBeInTheDocument();
+      expect(screen.getByText(t("auth.loginError"))).toBeInTheDocument();
     });
   });
 });

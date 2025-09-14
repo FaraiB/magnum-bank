@@ -10,6 +10,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import testTranslations from "./i18n/locales/test.json";
 
+// Initialize the global i18n instance for tests
 i18n.use(initReactI18next).init({
   lng: "en",
   fallbackLng: "en",
@@ -18,7 +19,13 @@ i18n.use(initReactI18next).init({
       translation: testTranslations,
     },
   },
+  interpolation: {
+    escapeValue: false,
+  },
 });
+
+// Create a test i18n instance that uses the same configuration
+const testI18n = i18n;
 
 // Support both store and preloadedState approaches
 interface TestRenderOptions {
@@ -53,7 +60,7 @@ export const renderWithProviders = (
 
   return render(
     <Provider store={testStore}>
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={testI18n}>
         <BrowserRouter>{component}</BrowserRouter>
       </I18nextProvider>
     </Provider>

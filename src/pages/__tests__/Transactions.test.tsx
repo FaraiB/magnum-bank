@@ -51,7 +51,10 @@ describe("Transactions Component", () => {
 
     // Check page navigation
     expect(
-      screen.getByRole("heading", { name: t("transactions.newTransaction") })
+      screen.getByRole("heading", {
+        name: t("transactions.newTransaction"),
+        level: 1,
+      })
     ).toBeInTheDocument();
 
     // Check balance display
@@ -64,9 +67,7 @@ describe("Transactions Component", () => {
     expect(
       screen.getByLabelText(t("transactions.recipientCPF"))
     ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(/transactions\.amount \(R\$\)/i)
-    ).toBeInTheDocument();
+    expect(screen.getByLabelText(/Amount \(R\$\)/i)).toBeInTheDocument();
     expect(screen.getByLabelText(t("transactions.type"))).toBeInTheDocument();
     expect(screen.getByLabelText(t("transactions.date"))).toBeInTheDocument();
     expect(
