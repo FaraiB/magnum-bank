@@ -1,5 +1,5 @@
 import React from "react";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 // Define the props for this component
 type HistoryFiltersProps = {
@@ -35,6 +35,8 @@ const HistoryFilters: React.FC<HistoryFiltersProps> = ({
   sortOrder,
   setSortOrder,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <h3 className="text-lg font-medium text-gray-900 mb-6">

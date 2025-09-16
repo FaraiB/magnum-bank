@@ -4,7 +4,7 @@ import { type RootState } from "../redux/store";
 import Layout from "../components/Layout";
 import HistoryFilters from "../components/HistoryFilters";
 import TransactionList from "../components/TransactionList";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const History = () => {
   const allTransactions = useSelector(
@@ -17,6 +17,7 @@ const History = () => {
   const [minAmount, setMinAmount] = useState("");
   const [maxAmount, setMaxAmount] = useState("");
   const [sortOrder, setSortOrder] = useState("desc");
+  const { t } = useTranslation();
 
   const filteredAndSortedTransactions = useMemo(() => {
     let filteredTransactions = [...allTransactions];

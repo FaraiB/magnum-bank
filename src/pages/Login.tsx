@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login, setAuthToken } from "../api/apiService";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/userSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../i18n/components/LanguageProvider";
 
 const Login = () => {
@@ -16,6 +16,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

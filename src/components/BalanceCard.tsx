@@ -1,11 +1,13 @@
-import { t } from "i18next";
 import React, { memo } from "react";
+import { useTranslation } from "react-i18next";
 
 type BalanceCardProps = {
   balance: number;
 };
 
 const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <div className="text-center">

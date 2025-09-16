@@ -13,7 +13,7 @@ import BalanceCard from "../components/BalanceCard";
 import TransactionForm, {
   type TransactionFormData,
 } from "../components/TransactionForm";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const Transactions = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -26,6 +26,7 @@ const Transactions = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [formKey, setFormKey] = useState(0);
+  const { t } = useTranslation();
 
   const handleTransactionFormSubmit = (data: TransactionFormData) => {
     setError("");

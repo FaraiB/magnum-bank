@@ -5,7 +5,7 @@ import { useEffect, memo } from "react";
 import Layout from "../components/Layout";
 import BalanceCard from "../components/BalanceCard";
 import LatestTransactions from "../components/LatestTransactions";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const selectLatestTransactions = (state: RootState) =>
   state.user.transactions.slice(0, 3);
@@ -14,6 +14,7 @@ const Home = () => {
   const user = useSelector((state: RootState) => state.user);
   const latestTransactions = useSelector(selectLatestTransactions);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!user || !user.id) {

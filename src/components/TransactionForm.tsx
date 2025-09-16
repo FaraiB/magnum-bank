@@ -1,5 +1,5 @@
-import { t } from "i18next";
 import React, { useState, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 export type TransactionFormData = {
   recipientName: string;
@@ -29,6 +29,7 @@ const TransactionForm: React.FC<TransactionFormProps> = memo(
     const [branch, setBranch] = useState("");
     const [account, setAccount] = useState("");
     const [pixKey, setPixKey] = useState("");
+    const { t } = useTranslation();
 
     const today = new Date().toISOString().substring(0, 10);
     const [transactionDate, setTransactionDate] = useState(today);

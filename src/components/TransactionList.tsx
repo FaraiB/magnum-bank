@@ -1,12 +1,14 @@
 import React from "react";
 import { type Transaction } from "../redux/userSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 type TransactionListProps = {
   transactions: Transaction[];
 };
 
 const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-white rounded-lg shadow-lg border border-gray-200">
       {transactions.length > 0 ? (

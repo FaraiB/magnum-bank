@@ -38,15 +38,6 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-// Helper to render with providers
-// const renderWithStore = (component: React.ReactElement, store: any) => {
-//   return render(
-//     <Provider store={store}>
-//       <BrowserRouter>{component}</BrowserRouter>
-//     </Provider>
-//   );
-// };
-
 describe("Integration Tests - User Flows", () => {
   const mockUser = {
     id: "1",

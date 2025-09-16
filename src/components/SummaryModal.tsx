@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { type Transaction } from "../redux/userSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 type SummaryModalProps = {
   isOpen: boolean;
@@ -14,6 +14,7 @@ const SummaryModal: React.FC<SummaryModalProps> = memo(
     if (!isOpen || !transaction) {
       return null;
     }
+    const { t } = useTranslation();
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">

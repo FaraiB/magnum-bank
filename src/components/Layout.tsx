@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearUser } from "../redux/userSlice";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../i18n/components/LanguageProvider";
 
 interface LayoutProps {
@@ -11,6 +11,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     dispatch(clearUser());

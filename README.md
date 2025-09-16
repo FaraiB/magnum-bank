@@ -12,6 +12,7 @@ O Magnum Bank é um simulador de transações financeiras desenvolvido para simu
 - 📊 **Histórico completo** com filtros e ordenação
 - 📱 **Design responsivo** otimizado para mobile
 - 🔒 **Rotas protegidas** com validação de autenticação
+- 🌐 **Internacionalização** com suporte a Português e Inglês
 
 ## 🚀 Tecnologias
 
@@ -20,6 +21,7 @@ O Magnum Bank é um simulador de transações financeiras desenvolvido para simu
 - **Estilização**: Tailwind CSS
 - **Estado Global**: Redux Toolkit
 - **Roteamento**: React Router v6
+- **Internacionalização**: react-i18next
 - **Testes**: Vitest + React Testing Library
 - **Mock API**: JSON Server
 
@@ -29,34 +31,44 @@ O Magnum Bank é um simulador de transações financeiras desenvolvido para simu
 magnum-bank/
 ├── src/
 │   ├── api/
-│   │   └── apiService.ts          # Camada de serviço para APIs
-├── components/                # Componentes reutilizáveis
-│   ├── BalanceCard.tsx       # Cartão de exibição de saldo
-│   ├── HistoryFilters.tsx    # Filtros do histórico
-│   ├── LatestTransactions.tsx # Últimas transações
-│   ├── Layout.tsx            # Layout principal da aplicação
-│   ├── PasswordModal.tsx     # Modal de confirmação por senha
-│   ├── PrivateRoute.tsx      # Proteção de rotas autenticadas
-│   ├── SummaryModal.tsx      # Modal de resumo de transação
-│   ├── TransactionForm.tsx   # Formulário de transações
-│   └── TransactionList.tsx   # Lista do histórico de transações
-├── pages/                     # Páginas da aplicação
-│   ├── __tests__/            # Testes unitários das páginas
-│   │   ├── integration/      # Testes de integração
-│   │   │   └── userFlows.test.tsx
-│   │   ├── History.test.tsx
-│   │   ├── Home.test.tsx
-│   │   ├── Login.test.tsx
-│   │   └── Transactions.test.tsx
-│   ├── History.tsx           # Página de histórico
-│   ├── Home.tsx              # Dashboard principal
-│   ├── Login.tsx             # Página de autenticação
-│   └── Transactions.tsx      # Página de transações
-├── redux/                     # Gerenciamento de estado
-│   ├── store.ts              # Configuração da store
-│   └── userSlice.ts          # Slice do usuário
-└── styles/                    # Estilos globais
-├── db.json                        # Dados mock para JSON Server
+│   │   └── apiService.ts         # Camada de serviço para APIs
+│   ├── components/               # Componentes reutilizáveis
+│   │   ├── BalanceCard.tsx       # Cartão de exibição de saldo
+│   │   ├── HistoryFilters.tsx    # Filtros do histórico
+│   │   ├── LatestTransactions.tsx # Últimas transações
+│   │   ├── Layout.tsx            # Layout principal da aplicação
+│   │   ├── PasswordModal.tsx     # Modal de confirmação por senha
+│   │   ├── PrivateRoute.tsx      # Proteção de rotas autenticadas
+│   │   ├── SummaryModal.tsx      # Modal de resumo de transação
+│   │   ├── TransactionForm.tsx   # Formulário de transações
+│   │   └── TransactionList.tsx   # Lista do histórico de transações
+│   ├── i18n/                     # Configuração de internacionalização
+│   │   ├── components/              # Configuração do i18next
+│   │   |    └── LanguageProvider.tsx  # Provider e seletor de idioma
+│   │   ├── hooks/
+│   │   |    └── useI18n.ts
+│   │   ├── locales/              # Arquivos de tradução
+│   │   |    ├── en-US.json       # Traduções em inglês
+│   │   |    ├── pt-BR.json       # Traduções em português
+│   │   |    └── test.json        # Keys para testes
+│   │   └── index.ts              # Configuração do i18next
+│   ├── pages/                    # Páginas da aplicação
+│   │   ├── __tests__/            # Testes unitários das páginas
+│   │   │   ├── integration/      # Testes de integração
+│   │   │   │   └── userFlows.test.tsx
+│   │   │   ├── History.test.tsx
+│   │   │   ├── Home.test.tsx
+│   │   │   ├── Login.test.tsx
+│   │   │   └── Transactions.test.tsx
+│   │   ├── History.tsx           # Página de histórico
+│   │   ├── Home.tsx              # Dashboard principal
+│   │   ├── Login.tsx             # Página de autenticação
+│   │   └── Transactions.tsx      # Página de transações
+│   ├── redux/                    # Gerenciamento de estado
+│   │   ├── store.ts              # Configuração da store
+│   │   └── userSlice.ts          # Slice do usuário
+│   └── styles/                   # Estilos globais
+├── db.json                       # Dados mock para JSON Server
 ├── package.json
 ├── vite.config.ts
 └── tailwind.config.js
@@ -96,6 +108,22 @@ npm run server
 
 > **Importante**: O arquivo `db.json` contém os dados de usuários e transações para simulação. Você pode modificar este arquivo para testar diferentes cenários.
 
+## 🌐 Internacionalização
+
+A aplicação suporta múltiplos idiomas através do **react-i18next**:
+
+### Idiomas Suportados
+
+- 🇧🇷 **Português (pt-BR)** - Idioma padrão
+- 🇺🇸 **Inglês (en-US)**
+
+### Funcionalidades de i18n
+
+- **Troca dinâmica de idioma** sem necessidade de recarregar a página
+- **Persistência da preferência** do usuário no localStorage
+- **Formatação de valores** adaptada ao contexto regional
+- **Testes agnósticos ao idioma** usando chaves de tradução
+
 ### Credenciais de Teste
 
 Para testar a aplicação, utilize as seguintes credenciais:
@@ -133,6 +161,7 @@ npm run test:integration
 
 - **Testes Unitários**: Componentes individuais
 - **Testes de Integração**: Fluxos completos do usuário
+- **Testes Multilíngues**: Validação usando chaves de tradução
 - **Cobertura**: Inclui componentes, páginas e utilitários
 
 ## 🏗️ Arquitetura e Decisões Técnicas
@@ -143,6 +172,7 @@ npm run test:integration
 - **Service Layer**: Comunicação centralizada com APIs através do `apiService.ts`
 - **Protected Routes**: Proteção baseada em autenticação com `PrivateRoute`
 - **Modal Pattern**: Implementação consistente de modais para confirmações
+- **i18n Pattern**: Internacionalização com hooks e providers React
 
 ### Principais Decisões
 
@@ -171,6 +201,17 @@ npm run test:integration
 **Decisão**: Usar layout baseado em **listas** ao invés de tabelas HTML para histórico de transações.
 **Justificativa**: Design mais responsivo que oferece melhor experiência em dispositivos móveis, onde tabelas tradicionais são difíceis de navegar.
 
+#### 6. Internacionalização com react-i18next
+
+**Decisão**: Implementar i18n usando react-i18next com hooks de React.
+**Justificativas**:
+
+- **Escalabilidade**: Suporte fácil para novos idiomas
+- **Performance**: Re-renderização automática apenas dos componentes que usam traduções
+- **Testes**: Testes agnósticos ao idioma usando chaves de tradução
+- **UX**: Troca de idioma instantânea sem reload da página
+- **Persistência**: Preferência do usuário mantida entre sessões
+
 ### Design System
 
 #### Paleta de Cores
@@ -186,6 +227,7 @@ npm run test:integration
 - **Botões**: Estilo consistente com estados hover e focus
 - **Formulários**: Inputs padronizados com validação visual
 - **Modais**: Overlay escuro com cards centralizados
+- **Language Switcher**: Seletor de idioma integrado ao layout
 
 ## 📦 Scripts Disponíveis
 

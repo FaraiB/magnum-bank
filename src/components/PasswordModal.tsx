@@ -1,5 +1,5 @@
-import { t } from "i18next";
 import React, { useState, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 type PasswordModalProps = {
   isOpen: boolean;
@@ -11,6 +11,7 @@ const PasswordModal: React.FC<PasswordModalProps> = memo(
   ({ isOpen, onClose, onSubmit }) => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const { t } = useTranslation();
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
